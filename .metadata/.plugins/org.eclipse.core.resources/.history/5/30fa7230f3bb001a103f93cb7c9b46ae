@@ -1,0 +1,99 @@
+package com.model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class memberDAOImpl implements memberDAO {
+	String url,user,pwd;
+	
+	//생성자 DB연결
+	public memberDAOImpl() {
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			url	= "jdbc:oracle:thin:@localhost:1521:xe";
+			user = "scott";
+			pwd = "1234";
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// 연결닫기 메소드
+	private void closeConnection(PreparedStatement pstmt, Connection con) {
+			try {
+				if(pstmt != null)
+					pstmt.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	// 유저 관리자 공통 항목
+	// 추가(회원 가입)
+	@Override
+	public void memberInsert(member m) {
+		 Connection con = null;
+		 PreparedStatement pstmt = null;
+		 
+		 try {
+			con = DriverManager.getConnection(url, user, pwd);
+			String sql = "INSERT INTO member VALUES(member_seq.nextval,?,?,?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getAccount());
+			pstmt.setInt(2, m.getPassword());
+			pstmt.setString(3, m.getName());
+			pstmt.setString(4, m.getBirth());
+			pstmt.setString(5, m.getCity());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getEmail());
+			pstmt.executeUpdate();
+			
+		}catch(SQLIntegrityConstraintViolationException e1) {
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(pstmt,con);
+		}
+		 
+		
+	}
+
+	@Override
+	public void memberUpdate(member m) {
+		// TODO Auto-generated method stub
+		
+	}
+	// 관리자 항목
+	@Override
+	public void memberDelete(int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<member> memberView() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public member memberDetail(int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<member> memberSearch(String key, String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

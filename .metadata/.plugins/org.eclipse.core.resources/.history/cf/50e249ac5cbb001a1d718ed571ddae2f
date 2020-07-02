@@ -1,0 +1,10 @@
+package com.model;
+
+public interface memberDAO {
+	
+	public void memberInsert(member m);
+	
+	public void memberUpdate(member m);
+	
+		
+}

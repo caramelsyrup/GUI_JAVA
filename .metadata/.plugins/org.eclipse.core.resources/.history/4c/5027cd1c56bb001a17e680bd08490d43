@@ -1,0 +1,9 @@
+package com.model;
+
+public class member {
+	private int num, password;
+	private String account, name, birth,city, phone, email;
+	
+	
+	
+}

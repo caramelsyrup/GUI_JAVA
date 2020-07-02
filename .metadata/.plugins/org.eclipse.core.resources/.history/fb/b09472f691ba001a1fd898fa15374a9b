@@ -1,0 +1,95 @@
+package com.test;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
+
+public class ViewMain extends JFrame {
+
+	private JPanel contentPane;
+	private JButton btn;
+	private JTextField tfText;
+	private JButton btn1;
+	private JTextField tffText;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					ViewMain frame = new ViewMain();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public ViewMain() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(getBtn());
+		contentPane.add(getTfText());
+		contentPane.add(getBtn1());
+		contentPane.add(getTffText());
+	}
+
+	private JButton getBtn() {
+		if (btn == null) {
+			btn = new JButton("\uBC84\uD2BC");
+			btn.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					tfText.setText("이벤트발생");
+				}
+			});
+			btn.setBounds(337, 228, 97, 23);
+		}
+		return btn;
+	}
+	private JTextField getTfText() {
+		if (tfText == null) {
+			tfText = new JTextField();
+			tfText.setHorizontalAlignment(SwingConstants.CENTER);
+			tfText.setBounds(337, 202, 97, 21);
+			tfText.setColumns(10);
+		}
+		return tfText;
+	}
+	private JButton getBtn1() {
+		if (btn1 == null) {
+			btn1 = new JButton("버튼이");
+			btn1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+				}
+			});
+			btn1.setBounds(0, 40, 97, 23);
+		}
+		return btn1;
+	}
+	private JTextField getTffText() {
+		if (tffText == null) {
+			tffText = new JTextField();
+			tffText.setBounds(0, 0, 131, 30);
+			tffText.setColumns(10);
+		}
+		return tffText;
+	}
+}

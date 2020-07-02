@@ -1,0 +1,21 @@
+package com.model;
+
+import java.util.ArrayList;
+
+public interface memberDAO {
+	
+	// 유저,관리자 공통 항목
+	// 추가
+	public void memberInsert(member m);
+	// 수정
+	public void memberUpdate(member m);
+	
+	// 관리자 항목
+	public void memberDelete(int num);
+	// 전체보기
+	public ArrayList<member> friendView();
+	// 상세보기
+	public member friendDetail(int num);
+	// 검색하기
+	public ArrayList<member> memberSearch(String key,String word);
+}

@@ -1,0 +1,12 @@
+package com.model;
+
+public interface memberDAO {
+	
+	// 蜡历,包府磊 傍烹 亲格
+	public void memberInsert(member m);
+	
+	public void memberUpdate(member m);
+	
+	// 包府磊 亲格
+	public void memberDelete(int num);	
+}

@@ -1,0 +1,111 @@
+package com.model;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class friendDAOImpl implements friendDAO {
+	String url;
+	String user; 
+	String pwd;
+	
+	// 생성자- db 연결
+	public friendDAOImpl() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			url	= "jdbc:oracle:thin:@localhost:1521:xe";
+			user = "scott";
+			pwd = "1234";
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void friendInsert(friend f) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = DriverManager.getConnection(url, user, pwd);
+			String sql = "INSERT INTO friend VALUES(friend_seq.nextval,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1,f.getName());
+			pstmt.setString(2, f.getBirth());
+			pstmt.setString(3, f.getPhone());
+			pstmt.setString(4, f.getAddr());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con,pstmt);
+		}
+	}
+
+	private void closeConnection(Connection con, PreparedStatement pstmt) {
+			try {
+				if(pstmt != null)
+					pstmt.close();
+				if(con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	}
+
+	@Override
+	public ArrayList<friend> friendView() {
+		Connection con	=	null;
+		Statement st	=	null;
+		ResultSet	rs	=	null;
+		
+		ArrayList<friend> array	= new ArrayList<friend>();
+		
+		try {
+			con = DriverManager.getConnection(url, user, pwd);
+			String sql = "SELECT * FROM firend ORDER BY 1 DESC";
+			
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		return null;
+	}
+
+	@Override
+	public friend friendDetail(int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void friendUpdate(friend f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void friendDelete(int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ArrayList<friend> friendSearch(String key, String word) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

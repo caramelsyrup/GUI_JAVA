@@ -1,0 +1,6 @@
+package com.model;
+
+public interface friendDAO {
+	// 추가
+	public void friendInsert(friend f);
+}

@@ -1,0 +1,11 @@
+package com.view;
+
+public class ViewController {
+	
+	public void ViewController() {
+		view v;
+		
+	}
+	
+	
+}

@@ -1,0 +1,86 @@
+package com.view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JToolBar;
+import javax.swing.JRadioButton;
+import javax.swing.border.BevelBorder;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JLabel;
+
+public class allowView extends JFrame {
+
+	private JPanel contentPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		
+		view w = new view();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					allowView frame = new allowView();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public allowView() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1280, 853);
+		contentPane = new JPanel();
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setBounds(340,125,600,200);
+		panel.add(textPane);
+		
+		JLabel lblNewLabel = new JLabel("AIRLINE");
+		lblNewLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(340, 374, 117, 23);
+		panel.add(lblNewLabel);
+		
+		JRadioButton rdbtnKoreanAir_1 = new JRadioButton("KOREAN AIR");
+		rdbtnKoreanAir_1.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtnKoreanAir_1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		rdbtnKoreanAir_1.setBounds(465, 374, 121, 23);
+		panel.add(rdbtnKoreanAir_1);
+		
+		JRadioButton rdbtnAsianAir = new JRadioButton("ASIAN AIR");
+		rdbtnAsianAir.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtnAsianAir.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		rdbtnAsianAir.setBounds(590, 374, 121, 23);
+		panel.add(rdbtnAsianAir);
+		
+		JRadioButton rdbtnKoreanAir_3 = new JRadioButton("KOREAN AIR");
+		rdbtnKoreanAir_3.setHorizontalAlignment(SwingConstants.CENTER);
+		rdbtnKoreanAir_3.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		rdbtnKoreanAir_3.setBounds(715, 374, 121, 23);
+		panel.add(rdbtnKoreanAir_3);
+	}
+}
