@@ -1,0 +1,7 @@
+package com.model;
+
+public class schedule {
+	private int year,month,num,price;
+	private String airline,dep,arr;
+	
+}

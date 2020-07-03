@@ -23,6 +23,8 @@ public class LoginTest {
     Statement st = null;
     String sql = null;
     ArrayList<member> arr = new ArrayList<member>();
+    view v = new view();
+    allowView frame = new allowView();
     
     public LoginTest(String id,int pw) {
 		try {
@@ -44,12 +46,10 @@ public class LoginTest {
 				while (rs.next() == true) {
                     if (Integer.parseInt(rs.getString(3)) == pw) {	// db의 password와 pw와 같은지 비교
                     	JOptionPane.showMessageDialog(null, "로그인성공");
-                    	allowView frame = new allowView();
     					frame.setVisible(true);
-    					view v = new view();
-    					v.dispose();
+    					v.setVisible(false);
                     } else {                
-                    	JOptionPane.showMessageDialog(null, "PASSWORD를 확인하세요");  
+                    	JOptionPane.showMessageDialog(null, "PASSWORD를 확인하세요");
                     }
                 }
 			  }

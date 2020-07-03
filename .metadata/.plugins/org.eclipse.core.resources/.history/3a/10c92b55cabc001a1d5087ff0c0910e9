@@ -1,0 +1,14 @@
+package com.model;
+
+import java.util.ArrayList;
+
+public interface scheduleDAO {
+		
+		
+		// 전체보기
+		public ArrayList<member> memberView();
+		// 상세보기
+		public member memberDetail(int num);
+		// 검색하기
+		public ArrayList<member> memberSearch(String key,String word);
+}

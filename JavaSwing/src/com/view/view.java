@@ -62,7 +62,7 @@ public class view extends JFrame {
 	 */
 	public view() {
 		setTitle("Reservation for Air-Ticket ");
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 388, 528);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,7 +73,11 @@ public class view extends JFrame {
 		panel1.setBounds(0, 0, 372, 489);
 		contentPane.add(panel1);
 		panel1.setLayout(null);
-
+		
+		JPanel panel2 = new JPanel();
+		panel2.setBounds(0, 0, 372, 489);
+		contentPane.add(panel2);
+		
 		JLabel lblTitle = new JLabel("\uD56D\uACF5\uAD8C \uC608\uB9E4 \uC11C\uBE44\uC2A4");
 		lblTitle.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -123,6 +127,7 @@ public class view extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				createView frame = new createView();
 				frame.setVisible(true);
+				dispose();
 			}
 		});
 		
@@ -134,9 +139,15 @@ public class view extends JFrame {
 		btnCreate.setBounds(58, 376, 107, 29);
 		panel1.add(btnCreate);
 		
-		JPanel panel2 = new JPanel();
-		panel2.setBounds(0, 0, 372, 489);
-		contentPane.add(panel2);
+		JButton btnNewButton = new JButton("EXIT");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+		});
+		btnNewButton.setFont(new Font("±¼¸²", Font.BOLD, 17));
+		btnNewButton.setBounds(127, 429, 97, 23);
+		panel1.add(btnNewButton);
+		
 	}
-	
 }

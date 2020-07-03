@@ -83,15 +83,13 @@ public class createView extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
+		panel.setBounds(5, 5, 644, 453);
+		contentPane.add(panel);
 		panel.setBackground(SystemColor.info);
-		tabbedPane.addTab("JOIN US", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("\uD68C\uC6D0\uAC00\uC785");
@@ -99,6 +97,18 @@ public class createView extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(12, 10, 214, 49);
 		panel.add(lblNewLabel);
+		
+		JButton btnNewButton_2 = new JButton("Back");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				view frame1 = new view();
+				frame1.setVisible(true);
+				dispose();
+			}
+		});
+		btnNewButton_2.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 12));
+		btnNewButton_2.setBounds(562, 10, 65, 26);
+		panel.add(btnNewButton_2);
 		
 		JLabel lblNewLabel_1 = new JLabel("ACCOUNT");
 		lblNewLabel_1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));

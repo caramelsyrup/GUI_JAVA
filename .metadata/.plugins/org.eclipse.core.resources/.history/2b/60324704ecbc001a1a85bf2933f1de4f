@@ -1,0 +1,17 @@
+package com.model;
+
+import java.util.ArrayList;
+
+public interface scheduleDAO {
+		
+		// 전체보기
+		public ArrayList<schedule> scheduleView();
+		// 상세보기
+		public schedule scheduleDetail(int num);
+		// 출발지 검색
+		public ArrayList<schedule> departureSearch(String dep,String word);
+		// 도착지 검색
+		public ArrayList<schedule> arriveSearch(String arrive,String word);
+		// 년 검색
+		public ArrayList<schedule> schSearch(String year,String word);
+}

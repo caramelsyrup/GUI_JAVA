@@ -11,9 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.model.LoginTest;
+import com.model.schedule;
+import com.model.scheduleDAOImpl;
 
 import javax.swing.JToolBar;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -21,16 +24,28 @@ import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
+import javax.swing.JSplitPane;
 
 public class allowView extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField tfdepart;
-	private JTextField textField;
+	private JTextField tfarrive;
+	
+	scheduleDAOImpl schDao = new scheduleDAOImpl();
 	
 	/**
 	 * Launch the application.
@@ -49,7 +64,7 @@ public class allowView extends JFrame {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -62,37 +77,27 @@ public class allowView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		 
-		 JTextPane textPane = new JTextPane();
-		 textPane.setBounds(400, 35, 435, 125);
-		 contentPane.add(textPane);
+		 JButton btnBack = new JButton("BACK");
+		 btnBack.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 		view frame1 = new view();
+				frame1.setVisible(true);
+		 		dispose();
+		 	}
+		 });
 		 
-		 JLabel lblNewLabel = new JLabel("AIRLINE");
-		 lblNewLabel.setBounds(339, 225, 117, 23);
-		 contentPane.add(lblNewLabel);
-		 lblNewLabel.setForeground(Color.WHITE);
-		 lblNewLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
-		 lblNewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		 JScrollPane scrollPane = new JScrollPane();
+		 scrollPane.setForeground(Color.WHITE);
+		 scrollPane.setBounds(375, 5, 217, 125);
+		 contentPane.add(scrollPane);
 		 
-		 JRadioButton rdbtnKoreanAir_1 = new JRadioButton("KOREAN AIR");
-		 rdbtnKoreanAir_1.setForeground(new Color(0, 0, 0));
-		 rdbtnKoreanAir_1.setBorder(null);
-		 rdbtnKoreanAir_1.setBackground(Color.WHITE);
-		 rdbtnKoreanAir_1.setBounds(464, 226, 121, 23);
-		 contentPane.add(rdbtnKoreanAir_1);
-		 rdbtnKoreanAir_1.setHorizontalAlignment(SwingConstants.CENTER);
-		 rdbtnKoreanAir_1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
-		 
-		 JRadioButton rdbtnAsianAir = new JRadioButton("ASIAN AIR");
-		 rdbtnAsianAir.setBounds(589, 226, 121, 23);
-		 contentPane.add(rdbtnAsianAir);
-		 rdbtnAsianAir.setHorizontalAlignment(SwingConstants.CENTER);
-		 rdbtnAsianAir.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
-		 
-		 JRadioButton rdbtnBusanAir = new JRadioButton("BUSAN AIR");
-		 rdbtnBusanAir.setBounds(714, 226, 121, 23);
-		 contentPane.add(rdbtnBusanAir);
-		 rdbtnBusanAir.setHorizontalAlignment(SwingConstants.CENTER);
-		 rdbtnBusanAir.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		 JTextArea textArea = new JTextArea();
+		 textArea.setBackground(Color.BLACK);
+		 textArea.setForeground(Color.WHITE);
+		 textArea.setFont(new Font("Nirmala UI Semilight", Font.BOLD, 18));
+		 scrollPane.setViewportView(textArea);
+		 btnBack.setBounds(339, 187, 67, 23);
+		 contentPane.add(btnBack);
 		 
 		 JLabel lblDeparture = new JLabel("DEPARTURE");
 		 lblDeparture.setBounds(339, 258, 117, 23);
@@ -107,6 +112,27 @@ public class allowView extends JFrame {
 		 tfdepart.setHorizontalAlignment(SwingConstants.CENTER);
 		 tfdepart.setColumns(10);
 		 
+		 // Ãâ¹ßÁö °Ë»ö
+		 JButton btnSearch = new JButton("SEARCH");
+		 btnSearch.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		textArea.setText("");
+		 		String dep = "dep";
+		 		ArrayList<schedule> arr = schDao.departureSearch( dep ,tfdepart.getText().toUpperCase());
+		 		for(schedule sch : arr) {
+					textArea.append("AIRLINE : "+sch.getAirline()+"\n");
+					textArea.append("DEP : "+sch.getDep()+"\n");
+					textArea.append("ARR : "+sch.getArr()+"\n");
+					textArea.append("YEAR : "+sch.getYear()+"\n");
+					textArea.append("MONTH : "+sch.getMonth()+"\n");
+					textArea.append("------------------------"+"\n");
+		 		}
+		 	}
+		 });
+		 btnSearch.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		 btnSearch.setBounds(594, 259, 97, 23);
+		 contentPane.add(btnSearch);
+		 
 		 JLabel lblArrive = new JLabel("ARRIVE");
 		 lblArrive.setBounds(339, 291, 117, 23);
 		 contentPane.add(lblArrive);
@@ -114,11 +140,32 @@ public class allowView extends JFrame {
 		 lblArrive.setHorizontalAlignment(SwingConstants.LEFT);
 		 lblArrive.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
 		 
-		 textField = new JTextField();
-		 textField.setBounds(464, 293, 108, 23);
-		 contentPane.add(textField);
-		 textField.setHorizontalAlignment(SwingConstants.CENTER);
-		 textField.setColumns(10);
+		 tfarrive = new JTextField();
+		 tfarrive.setBounds(464, 293, 108, 23);
+		 contentPane.add(tfarrive);
+		 tfarrive.setHorizontalAlignment(SwingConstants.CENTER);
+		 tfarrive.setColumns(10);
+		 
+		 // µµÂøÁö °Ë»ö
+		 JButton btnSearch1 = new JButton("SEARCH");
+		 btnSearch1.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+			 		textArea.setText("");
+			 		String arrive = "arr";
+			 		ArrayList<schedule> arr = schDao.arriveSearch(arrive ,tfarrive.getText().toUpperCase());
+			 		for(schedule sch : arr) {
+						textArea.append("AIRLINE : "+sch.getAirline()+"\n");
+						textArea.append("DEP : "+sch.getDep()+"\n");
+						textArea.append("ARR : "+sch.getArr()+"\n");
+						textArea.append("YEAR : "+sch.getYear()+"\n");
+						textArea.append("MONTH : "+sch.getMonth()+"\n");
+						textArea.append("------------------------"+"\n");
+			 		}
+		 	}
+		 });
+		 btnSearch1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		 btnSearch1.setBounds(594, 292, 97, 23);
+		 contentPane.add(btnSearch1);
 		 
 		 JLabel lblSchedule = new JLabel("SCHEDULE");
 		 lblSchedule.setBounds(339, 324, 117, 23);
@@ -131,7 +178,7 @@ public class allowView extends JFrame {
 		 comboBox.setBounds(464, 326, 67, 21);
 		 contentPane.add(comboBox);
 		 comboBox.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
-		 comboBox.setModel(new DefaultComboBoxModel(new String[] {"2020", "2021"}));
+		 comboBox.setModel(new DefaultComboBoxModel(new String[] {"YEAR", "2020", "2021"}));
 		 
 		 JLabel lblYear = new JLabel("YEAR");
 		 lblYear.setBounds(543, 326, 41, 23);
@@ -140,36 +187,76 @@ public class allowView extends JFrame {
 		 lblYear.setHorizontalAlignment(SwingConstants.CENTER);
 		 lblYear.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
 		 
-		 JComboBox comboBox_1 = new JComboBox();
-		 comboBox_1.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
-		 comboBox_1.setBounds(589, 327, 50, 21);
-		 contentPane.add(comboBox_1);
-		 comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"}));
+		 // ³â°ú ¿ù·Î Á¶È¸
+		 JButton btnSearch2 = new JButton("SEARCH");
+		 btnSearch2.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		int idx = comboBox.getSelectedIndex();
+				int key = 0;
+				String ye = "year";
+				if(idx==1) {
+					textArea.setText("");
+					key = 2020;
+				}else if(idx==2) {
+					textArea.setText("");
+					key= 2021;
+				}
+				ArrayList<schedule> array = schDao.schSearch(ye, key);
+				for(schedule sch : array) {
+					textArea.append("AIRLINE : "+sch.getAirline()+"\n");
+					textArea.append("DEP : "+sch.getDep()+"\n");
+					textArea.append("ARR : "+sch.getArr()+"\n");
+					textArea.append("YEAR : "+sch.getYear()+"\n");
+					textArea.append("MONTH : "+sch.getMonth()+"\n");
+					textArea.append("------------------------"+"\n");
+				}
+		 	}
+		 });
 		 
-		 JLabel lblMonth = new JLabel("MONTH");
-		 lblMonth.setBounds(651, 324, 59, 23);
-		 contentPane.add(lblMonth);
-		 lblMonth.setForeground(Color.WHITE);
-		 lblMonth.setHorizontalAlignment(SwingConstants.CENTER);
-		 lblMonth.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		 btnSearch2.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
+		 btnSearch2.setBounds(594, 325, 97, 23);
+		 contentPane.add(btnSearch2);
 		 
-		 JButton btnNewButton = new JButton("SEARCH");
-		 btnNewButton.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 13));
-		 btnNewButton.setBounds(738, 326, 97, 23);
+		 // ÀüÃ¼ ½ºÄÉÁì Á¶È¸ ±â´É
+		 JButton btnNewButton = new JButton("All SCHEDULE");
+		 btnNewButton.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		textArea.setText("");
+		 		ArrayList<schedule> arr = schDao.scheduleView();
+				for(schedule sch : arr) {
+					textArea.append("AIRLINE : "+sch.getAirline()+"\n");
+					textArea.append("DEP : "+sch.getDep()+"\n");
+					textArea.append("ARR : "+sch.getArr()+"\n");
+					textArea.append("YEAR : "+sch.getYear()+"\n");
+					textArea.append("MONTH : "+sch.getMonth()+"\n");
+					textArea.append("\n");
+				}
+		 	}
+		 });
+		 
+		 btnNewButton.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 10));
+		 btnNewButton.setBounds(543, 187, 108, 23);
 		 contentPane.add(btnNewButton);
 		 
-		 JLabel lblInfo = new JLabel("");
-		 lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
-		 lblInfo.setForeground(Color.WHITE);
-		 lblInfo.setBounds(234, 231, 93, 116);
-		 contentPane.add(lblInfo);
+		 // ¿¹¸ÅÇÏ±â ¹öÆ°
+		 JButton btnReser = new JButton("\uC608\uB9E4\uD558\uAE30");
+		 btnReser.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		choiceView cv = new choiceView();
+		 		cv.setVisible(true);
+		 		dispose();
+		 	}
+		 });
+		 
+		 btnReser.setBounds(464, 402, 128, 44);
+		 contentPane.add(btnReser);
 		 
 		 JLabel background = new JLabel("");
 		 background.setFont(new Font("µ¸¿òÃ¼", Font.BOLD, 16));
 		 background.setHorizontalAlignment(SwingConstants.CENTER);
 		 background.setForeground(Color.WHITE);
 		 background.setIcon(new ImageIcon("src\\img\\terminal.jpg"));
-		 background.setBounds(12, 0, 1262, 673);
+		 background.setBounds(0, 0, 1234, 614);
 		 contentPane.add(background);
 	}
 }
