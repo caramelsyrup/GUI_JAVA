@@ -133,7 +133,7 @@ public class createView extends JFrame {
 		lblNewLabel_1_1.setBounds(12, 136, 86, 26);
 		panel.add(lblNewLabel_1_1);
 		
-		JLabel lblPwd = new JLabel("* 4\uC790\uC774\uC0C1 8\uC790\uC774\uD558");
+		JLabel lblPwd = new JLabel("* \uC22B\uC790 4\uC790\uC774\uC0C1 8\uC790\uC774\uD558");
 		lblPwd.setFont(new Font("굴림", Font.PLAIN, 10));
 		lblPwd.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPwd.setBounds(112, 121, 114, 15);
@@ -257,9 +257,9 @@ public class createView extends JFrame {
 		JButton btnView = new JButton("View");
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				taScreen.setText("");
 				ArrayList<member> arr = dao.memberSearch(tfSearchac.getText(),tfSearchpw.getText());
 				for(member m : arr) {
-					taScreen.append("번호 : "+m.getNum()+"\n");
 					taScreen.append("account : "+m.getAccount()+"\n");
 					taScreen.append("password : "+m.getPassword()+"\n");
 					taScreen.append("이름 : "+m.getName()+"\n");

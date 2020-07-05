@@ -2,7 +2,12 @@ package com.model;
 
 public class member {
 	private int num,password;
-	private String account,name,birth,city,phone,email;
+	private String account;
+	private String name;
+	private String birth;
+	private String city;
+	private String phone;
+	private String email;
 	
 	public int getNum() {
 		return num;
@@ -16,7 +21,7 @@ public class member {
 	public void setPassword(int password) {
 		this.password = password;
 	}
-	public String getAccount() {
+	public  String getAccount() {
 		return account;
 	}
 	public void setAccount(String account) {
@@ -51,8 +56,6 @@ public class member {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
-	
+	}	
 	
 }

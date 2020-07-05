@@ -33,6 +33,15 @@ public class scheduleDAOImpl implements scheduleDAO {
 					e.printStackTrace();
 				}
 		}
+		private void closeConnection(Connection con, Statement st, ResultSet rs) {
+			try {
+				if(rs != null) rs.close();
+				if(st != null) st.close();
+				if(con != null) con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		private void closeConnection(Connection con, PreparedStatement pstmt, ResultSet rs) {
 			try {
 				if(rs != null) rs.close();
@@ -42,7 +51,6 @@ public class scheduleDAOImpl implements scheduleDAO {
 				e.printStackTrace();
 			}
 		}
-		
 	@Override	// 전체보기
 	public ArrayList<schedule> scheduleView() {
 		Connection con = null;
@@ -68,7 +76,7 @@ public class scheduleDAOImpl implements scheduleDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			
+			closeConnection(con, st, rs);
 		}
 		return arr ;
 	}
@@ -101,6 +109,8 @@ public class scheduleDAOImpl implements scheduleDAO {
 			}
 		}catch(SQLException e) {
 				e.printStackTrace();
+			} finally {
+				closeConnection(con, pstmt, rs);
 			}
 		return arr;
 	}
@@ -126,6 +136,8 @@ public class scheduleDAOImpl implements scheduleDAO {
 			}
 		}catch(SQLException e) {
 				e.printStackTrace();
+		} finally {
+			closeConnection(con, pstmt, rs);	
 			}
 		return arr;
 	}
@@ -151,6 +163,8 @@ public class scheduleDAOImpl implements scheduleDAO {
 			}
 		}catch(SQLException e) {
 				e.printStackTrace();
+			} finally {
+				closeConnection(con, pstmt, rs);
 			}
 		return arr;
 	}

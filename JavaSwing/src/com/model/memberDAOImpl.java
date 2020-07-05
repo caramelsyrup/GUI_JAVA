@@ -56,7 +56,8 @@ public class memberDAOImpl implements memberDAO {
 		 
 		 try {
 			con = DriverManager.getConnection(url, user, pwd);
-			String sql = "INSERT INTO member VALUES(member_seq.nextval,?,?,?,?,?,?,?)";
+			String sql ="INSERT INTO member(account,password,name,birth,city,phone,email) "
+					+ "VALUES(?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, m.getAccount());
@@ -68,6 +69,7 @@ public class memberDAOImpl implements memberDAO {
 			pstmt.setString(7, m.getEmail());
 			pstmt.executeUpdate();
 			JOptionPane.showMessageDialog(null, "회원가입을 축하합니다.");
+			con.commit();
 		} catch(SQLIntegrityConstraintViolationException e1) {
 			JOptionPane.showMessageDialog(null, "올바르게 입력하세요.");
 		}catch (SQLException e) {
@@ -106,7 +108,6 @@ public class memberDAOImpl implements memberDAO {
 				m.setPhone(rs.getString("phone"));
 				m.setCity(rs.getString("city"));
 				m.setEmail(rs.getString("email"));
-				m.setNum(rs.getInt("num"));
 				arr.add(m);
 			}
 		} catch (SQLException e) {
