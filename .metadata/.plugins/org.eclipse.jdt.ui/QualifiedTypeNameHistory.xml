@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.sql.Driver"/>
-<fullyQualifiedTypeName name="com.model.friend"/>
 <fullyQualifiedTypeName name="java.lang.Appendable"/>
 <fullyQualifiedTypeName name="java.lang.Class"/>
 <fullyQualifiedTypeName name="com.model.member"/>
@@ -25,8 +24,6 @@
 <fullyQualifiedTypeName name="com.model.scheduleDAO"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="java.sql.Connection"/>
-<fullyQualifiedTypeName name="java.sql.DriverManager"/>
 <fullyQualifiedTypeName name="com.model.scheduleDAOImpl"/>
 <fullyQualifiedTypeName name="com.model.schedule"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
@@ -39,4 +36,14 @@
 <fullyQualifiedTypeName name="com.view.allowView"/>
 <fullyQualifiedTypeName name="com.view.seatView"/>
 <fullyQualifiedTypeName name="com.view.choiceView"/>
+<fullyQualifiedTypeName name="java.lang.ClassFormatError"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
+<fullyQualifiedTypeName name="com.test.ConnectionTest"/>
+<fullyQualifiedTypeName name="com.model.friendDAO"/>
+<fullyQualifiedTypeName name="com.model.friendDAOImpl"/>
+<fullyQualifiedTypeName name="org.junit.Assert"/>
+<fullyQualifiedTypeName name="com.model.friend"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
 </qualifiedTypeNameHistroy>

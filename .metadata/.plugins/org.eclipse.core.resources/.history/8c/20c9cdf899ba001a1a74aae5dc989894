@@ -1,7 +1,0 @@
-package com.model;
-
-public class friend {
-	private int num;
-	private String name, birth, phone, addr;
-	
-}
