@@ -30,7 +30,7 @@
 <title>학생성적</title>
 </head>
 <body>
-	<form action="scoreResult.jsp" method="post" name="score" id="sc">
+	<form action="scoreResult3.jsp" method="post" name="score" id="sc">
 		이름 : <input type="text" name="name" id="name"><br>
 		국어 : <input type="text" name="kor" id="kor"><br>
 		영어 : <input type="text" name="eng" id="eng"><br>

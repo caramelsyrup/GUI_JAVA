@@ -36,7 +36,7 @@
 </script>
 </head>
 <body>
-	<form action="output.jsp" method="post" name="frm">	<!-- post는 주소창에 정보를 비공개전환 -->
+	<form action="inputResult.jsp" method="post" name="frm">	<!-- post는 주소창에 정보를 비공개전환 -->
 		이름 : <input type="text" name="name" id="name"><br>
 		학번 : <input type="text" name="studentNum" id="studentNum"><br>
 		성별 : 
