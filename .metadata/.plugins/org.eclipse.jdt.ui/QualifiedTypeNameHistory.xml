@@ -53,4 +53,6 @@
 <fullyQualifiedTypeName name="org.junit.Before"/>
 <fullyQualifiedTypeName name="org.junit.After"/>
 <fullyQualifiedTypeName name="org.junit.AfterClass"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 </qualifiedTypeNameHistroy>
