@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 
 public class AddressDAO {
 	// static으로 인스텐스로 객체 생성.
-	private static AddressDAO instance = new AddressDAO();
+	private static final AddressDAO instance = new AddressDAO();
 	// static으로 instance를 반환하는 메소드생성.
 	public static AddressDAO getInstance() {
 		return instance;
@@ -49,17 +49,21 @@ public class AddressDAO {
 	}
 	
 	// 전체보기
-	public ArrayList<Address> addressList() throws Exception{
+	public ArrayList<Address> addressList(String field, String word) throws Exception{
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		Statement st = null;
 		ResultSet rs = null;
 		ArrayList<Address> address = new ArrayList<Address>();
-		
+		String sql = "";
 		try {
 			con = getConnection();
-			String sql = "SELECT * FROM address";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery(sql);
+			if(word.equals("")) {	// 검색이 비워져있을떄
+				sql = "SELECT * FROM address ORDER BY 1";
+			}else {					// 검색어를 넣었을떄
+				sql = "SELECT * FROM address WHERE "+field+" like '%"+word+"%' ORDER BY 1";
+			}
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
 			while(rs.next()) {
 				Address ad = new Address();
 				ad.setNum(rs.getLong("num"));
@@ -71,6 +75,8 @@ public class AddressDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
 		}
 		return address;
 	}
@@ -127,6 +133,82 @@ public class AddressDAO {
 		}
 	}
 	
+	//삭제하기
+	public void addressDelete(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConnection();
+			String sql = "DELETE FROM address WHERE num="+num;
+//			String sql = "DELETE FROM address WHERE num= ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.executeUpdate(sql);
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			closeConnection(con, pstmt);
+		}
+	}
+	
+	// 우편번호 검색
+	public ArrayList<ZipcodeBean> zipcodeRead(String dong) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<ZipcodeBean> zipArr = new ArrayList<ZipcodeBean>();
+		try {
+			con = getConnection();
+			String sql="SELECT * FROM zipcode WHERE dong LIKE '%"+dong+"%'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()) {
+				ZipcodeBean zip = new ZipcodeBean();
+				zip.setZipcode(rs.getString("zipcode"));
+				zip.setSido(rs.getString("sido"));
+				zip.setGugun(rs.getString("gugun"));
+				zip.setDong(rs.getString("dong"));
+				zip.setBunji(rs.getString("bunji"));
+				zip.setSeq(rs.getInt("seq"));
+				zipArr.add(zip);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return zipArr;
+	}
+	
+	// 갯수 세기
+	public int getCount(String field, String word) {
+		Connection con = null;
+		Statement st  = null;
+		ResultSet rs = null;
+		String sql ="";
+		int a = 0;
+		
+		try {
+			con = getConnection();
+			if(word.equals("")) {	// 검색 안댐.
+				sql = "SELECT count(name) FROM address";
+			}else {					// 검색이 댐
+				sql = "SELECT count(name) cnt FROM address WHERE "+field+" LIKE '%"+word+"%'";
+			}
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+			a = rs.getInt(1);
+//			a = rs.getInt("cnt") 식으로 열의 별칭을 적어도 가능.			
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return a;
+	}
 	
 	// 닫기 메소드1
 	private void closeConnection(Connection con, PreparedStatement pstmt) {

@@ -9,6 +9,7 @@
 integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" 
 crossorigin="anonymous"></script>
 <script type="text/javascript">
+// DOM 방식을 이용. jquery이용.
 $(function(){
 	$("#btn").on("click",function(){
 		alert("작동됩니다.");
@@ -16,7 +17,9 @@ $(function(){
 		
 	})//click
 }) // function
-
+function zipFinder(){
+	window.open("zipCheck.jsp","","width=700 height=400");
+}
 </script>
 </head>
 <body>
@@ -24,7 +27,7 @@ $(function(){
 <a href="list.jsp">주소록가기</a>
 <!-- insertPro.jsp에서 DB에 값을 저장 할 수 있도록 유도 -->
 <form action="insertPro.jsp" method="post" name="enroll" id="enroll">
-	<table>
+	<table >
 		<tr>
 			<th align="left">이름</th>
 			<td><input type="text" name="name" id="name"></td>
@@ -32,7 +35,8 @@ $(function(){
 		<tr>
 			<th align="left">우편번호</th>
 			<td>
-				<input type="text" name="zipcode" id="zipCode" size="10"><button>검색</button>
+				<input type="text" name="zipcode" id="zipCode" size="10">
+				<input type="button" value="검색"	 onclick="zipFinder()">
 			</td>
 		</tr>
 		<tr>
