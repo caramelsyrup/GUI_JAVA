@@ -17,7 +17,7 @@ public class ZipcodeBean {
 		this.sido = sido;
 	}
 	public String getGugun() {
-		return gugun;
+		return gugun == null? "" : gugun;
 	}
 	public void setGugun(String gugun) {
 		this.gugun = gugun;

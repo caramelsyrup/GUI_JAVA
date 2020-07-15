@@ -45,17 +45,6 @@ function send(zip,sido,gugun,don,bunji){
 	self.close();
 }
 
-function send(zip,sido,gugun,don,bunji){
-	var address = sido+" "+gugun+" "+don+" "+bunji;
-	opener.document.update.zipcode.value=zip;
-	opener.document.update.address.value=address;
-	self.close();
-}
-
-$(function(){
-	
-})
-
 </script>
 </head>
 <body>

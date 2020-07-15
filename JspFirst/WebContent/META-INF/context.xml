@@ -23,7 +23,8 @@
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 	<Resource auth="Container"
 		driverClassName="oracle.jdbc.driver.OracleDriver"
-		loginTimeout="10" maxWait="5000"
+		maxIdle="20" maxActive="20"
+		loginTimeout="10"
 		username="scott"
 		name="jdbc/jsp"
 		password="1234"
