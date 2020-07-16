@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("UTF-8"); %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@ integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 crossorigin="anonymous"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#send1").on("click",function(){
+	$("#send").on("click",function(){
 		// getJSON은 파싱까지 되어 있음.
 		$.getJSON("zipCheckPro.jsp",{"dong":$("#dong").val()},
 				function(data){
@@ -68,7 +69,7 @@ $(document).ready(function(){
 	<tr>
 		<td>
 			동이름 입력	<input type="text" name="dong" id="dong">
-			<button id="send1">검색</button>
+			<button id="send">검색</button>
 			<button id="getsend">get검색</button>
 		</td>
 	</tr>

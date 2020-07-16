@@ -48,7 +48,7 @@ function zipFinder(){
 </script>
 </head>
 <body>
-	<h1>상세보기&수정하기</h1>
+	<h1>상세보기 & 수정하기</h1>
 <a href="list.jsp">주소록가기</a>
 <!-- insertPro.jsp에서 DB에 값을 저장 할 수 있도록 유도 -->
 <form action="updatePro.jsp" method="post" name="update" id="update">
