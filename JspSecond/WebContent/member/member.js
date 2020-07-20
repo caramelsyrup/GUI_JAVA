@@ -69,5 +69,28 @@ $(document).ready(function(){
 			}
 		});	// $.ajax
 	});	// click
-	
-});
+});	// document
+
+function del(userID,mode){
+	if(mode=="관리자"){
+		alert("관리자는 삭제 불가능");
+		return;
+	}
+	$.getJSON("memberDelete.jsp",{"userID":userID},
+			function(data){
+					var htmlStr="";
+					$.each(data,function(key,val){
+						htmlStr+="<tr>";
+						htmlStr+="<td>"+val.userID+"</td>";
+						htmlStr+="<td>"+val.userName+"</td>";
+						htmlStr+="<td>"+val.userTel+"</td>";
+						htmlStr+="<td>"+val.userEmail+"</td>";
+						htmlStr+="<td>"+val.mode+"</td>";
+	//					htmlStr+="<td><a href='userList.jsp'>삭제</a></td>";
+						htmlStr+="<td><a href=javascript:del('"+val.userID+"','"+val.mode+"')>삭제2</a></td>";
+						htmlStr+="</tr>";
+					});
+					$("table tbody").html(htmlStr);
+			}	//콜백함수
+	);	// getJSON
+}	// del

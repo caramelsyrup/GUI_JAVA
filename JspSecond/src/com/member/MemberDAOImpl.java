@@ -101,16 +101,56 @@ public class MemberDAOImpl implements MemberDAO {
 		return array;
 	}
 
-	@Override
-	public void memberUpdate(MemberVO vo) {
-		// TODO Auto-generated method stub
+	@Override	// 멤버 정보 변경.
+	public int memberUpdate(MemberVO vo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		 try {
+			con = getConnection();
+			String sql = "UPDATE member SET username=?,useremail=?,usertel=?,admin=? WHERE userid=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getUserName());
+			pstmt.setString(2, vo.getUserEmail());
+			pstmt.setString(3, vo.getUserTel());
+			pstmt.setInt(4, vo.getAdmin());
+			pstmt.setString(5, vo.getUserID());
+			pstmt.executeUpdate();
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, pstmt);
+		}
+		return 0;
 		
 	}
 
-	@Override
+	@Override	// 멤버 정보 조회
 	public MemberVO memberDetail(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		MemberVO vo = null;
+		try {
+			con = getConnection();
+			String sql = "SELECT * FROM member WHERE userID = '"+userID+"'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+		
+			while(rs.next()) {
+				vo = new MemberVO();
+				vo.setUserID(rs.getString("userid"));
+				vo.setUserName(rs.getString("username"));
+				vo.setUserPwd(rs.getString("userpwd"));
+				vo.setUserEmail(rs.getString("useremail"));
+				vo.setUserTel(rs.getString("usertel"));
+				vo.setAdmin(rs.getInt("admin"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return vo;
 	}
 
 	@Override	// 삭제기능
@@ -120,7 +160,7 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		try {
 			con = getConnection();
-			String sql = "DELETE FROM member WHERE userID ="+userID;
+			String sql = "DELETE FROM member WHERE userID ='"+userID+"'";
 			pstmt = con.prepareStatement(sql);
 			pstmt.executeUpdate(sql);
 			con.commit();
@@ -131,8 +171,6 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	
-	
 	@Override	// 회원가입, 아이디 중복 검사
 	public String idCheck(String userID) {
 		Connection con =null;
@@ -156,5 +194,38 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return flag;
 	}
+
+	
+	@Override // 로그인 아이디 비밀번호 판단.
+	public int loginCheck(String userID, String userPwd) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			String sql = "SELECT userPwd, admin FROM member WHERE userID = '"+userID+"'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			
+			if(rs.next()) {
+				if(rs.getString("userPwd").equals(userPwd)) {	// String의 비교는 equals
+					int flag = rs.getInt("admin");
+					return flag;
+				}else {
+					return 2;	// userID는 있으나 userPwd가 없음.
+				}
+			}else {
+				return -1;	// rs가  없음 . userID가 없음.
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return -2;
+	}
+	
+	
 
 }

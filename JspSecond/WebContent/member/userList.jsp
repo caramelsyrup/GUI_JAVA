@@ -10,28 +10,22 @@
 <meta charset="UTF-8">
 <title>가입회원 보기</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="member.js"></script>
 <%
 	request.setCharacterEncoding("UTF-8");
 	MemberDAOImpl dao = MemberDAOImpl.getinstance();
 	ArrayList<MemberVO> arr = null;
 	arr = dao.memberList();
+	String loginID = (String)session.getAttribute("USERID");
 %>    
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 	  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<script type="text/javascript">
-
-function deleteUser(userID){
-	String userID = 
-	if(confirm("정말 삭제 하시겠습니까?")){
-		location.href = "deletePro.jsp?userID="+userID;
-	}
-}
-
-</script>
 </head>
 <body>
 <h1>회원관리명단</h1>
-<div>
+<div align="right">
+	<a href="memberView.jsp"><%=loginID %></a>님 반갑습니다.
+	<a href="logout.jsp">로그아웃</a>
 	<a href="memberForm.jsp">회원가입하기</a>
 </div>
 		<table class="table">
@@ -48,15 +42,15 @@ function deleteUser(userID){
 			<tbody>
 <%
 				for(MemberVO vo : arr){
-					String mode = vo.getAdmin()==0?"일반회원":"관리자";
+					String mode = vo.getAdmin()==0? "일반회원":"관리자";
 %>
 				<tr>
-					<td><a href="detail.jsp?userID=<%=vo.getUserID()%>"><%=vo.getUserID()%></a></td>
+					<td><%=vo.getUserID()%></td>
 					<td><%=vo.getUserName() %></td>
 					<td><%=vo.getUserTel() %></td>
 					<td><%=vo.getUserEmail() %></td>
 					<td><%=mode %></td>
-					<td onclick="deleteUser()">삭제</td>
+					<td><a href="javascript:del('<%=vo.getUserID()%>','<%=mode%>')"/>삭제</a></td>
 				</tr>			
 <%
 				}

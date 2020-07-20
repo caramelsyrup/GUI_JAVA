@@ -21,11 +21,16 @@
 		<table>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="userName" id="userName" >*</td>
+				<td>
+					<input type="text" name="userName" id="userName" >*
+				</td>
 			</tr>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="userID" id="userID" disabled="disabled">*<input type="button" name="idChk" id="idChk" value="중복체크"></td>
+				<td>
+					<input type="text" name="userID" id="userID" disabled="disabled">*
+					<input type="button" name="idChk" id="idChk" value="중복체크">
+				</td>
 			</tr>
 			<tr>
 				<th>암호</th>
