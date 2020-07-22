@@ -17,4 +17,6 @@ public interface MemberDAO {
 	public String idCheck(String userID);
 	// 로그인 판단
 	public int loginCheck(String userID, String userPwd );
+	
+	public int memberCount();
 }

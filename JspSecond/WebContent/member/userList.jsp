@@ -17,13 +17,15 @@
 	ArrayList<MemberVO> arr = null;
 	arr = dao.memberList();
 	String loginID = (String)session.getAttribute("USERID");
+	int count = dao.memberCount();
 %>    
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
 	  integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 </head>
 <body>
 <h1>회원관리명단</h1>
-<div align="right">
+<div style="float: right;" >
+	현재 회원 수는 <span id="cntSpan" style="font-size: large; color: orange;"><%=count %></span>명 입니다.
 	<a href="memberView.jsp"><%=loginID %></a>님 반갑습니다.
 	<a href="logout.jsp">로그아웃</a>
 	<a href="memberForm.jsp">회원가입하기</a>

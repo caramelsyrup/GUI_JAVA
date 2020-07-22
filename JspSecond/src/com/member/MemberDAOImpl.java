@@ -225,6 +225,29 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return -2;
 	}
+
+	@Override	// 회원수 찾기 메소드
+	public int memberCount() {
+		Connection con = null;
+		Statement st	= null;
+		ResultSet rs	= null;
+		int count	=	0;
+		try {
+			con = getConnection();
+			String sql = "SELECT COUNT(USERID) FROM member";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next())
+			count = rs.getInt(1);
+			return count;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	finally {
+			closeConnection(con, st, rs);
+		}
+		return count;
+	}
 	
 	
 
