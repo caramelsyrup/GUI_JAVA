@@ -55,15 +55,48 @@ public class BoardDAO {
 	}
 	
 	//추가
-	public void boardInsert(BoardVO board) {
+	public void boardInsert(BoardVO board) {	// 새글과 답글 구분
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "";
+		//부모글. db에서 받아 옴.
+		int num = board.getNum();
+		int ref = board.getRef();
+		int re_step = board.getRe_step();
+		int re_level = board.getRe_level();
+		
+		int number = 0;
 		
 		try {
 			con = getConnection();
+			pstmt = con.prepareStatement("SELECT MAX(num) FROM board");
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {	// 기존데이터가 있을때 ref를 최대값+1로 결정. number를 ref에 저장시킬것임.
+				number = rs.getInt(1)+1;
+			}else {	// 기존데이터가 없을때 ref를 1로 결정
+				number = 1;
+			}
+			if(num!=0) {	// 답글
+				sql = "UPDATE board SET re_step=re_step+1 WHERE ref=? and re_step>? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, ref);
+				pstmt.setInt(2, re_step);
+				pstmt.executeUpdate();
+				re_step = re_step +1;
+				re_level = re_level+1;
+				
+			}else {	// 새글
+				ref = number;
+				re_step=0;
+				re_level=0;
+			}
+			
 			// 현재 페이지에서 아는 내용만 추가되도록 한다.
-			String sql = "INSERT INTO board(num,reg_date,writer,subject,email,content,passwd,ip) "
-					+ "VALUES(board_seq.nextval,SYSDATE,?,?,?,?,?,?)";
+			// num, writer,subject,email,content,passwd,ip,readcount,ref,re_step,re_level
+			sql = "INSERT INTO board(num,reg_date,writer,subject,email,content,passwd,ip,readcount,ref,re_step,re_level) "
+					+ "VALUES(board_seq.nextval,SYSDATE,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, board.getWriter());
 			pstmt.setString(2, board.getSubject());
@@ -71,6 +104,10 @@ public class BoardDAO {
 			pstmt.setString(4, board.getContent());
 			pstmt.setString(5, board.getPasswd());
 			pstmt.setString(6, board.getIp());
+			pstmt.setInt(7, board.getreadcount());
+			pstmt.setInt(8, ref);
+			pstmt.setInt(9, re_step);
+			pstmt.setInt(10, re_level);
 			pstmt.executeUpdate();
 			con.commit();
 			
@@ -82,16 +119,19 @@ public class BoardDAO {
 	}
 	
 	//전체보기
-	public ArrayList<BoardVO>boardList(){
+	public ArrayList<BoardVO>boardList(int startRow,int endRow){
 		Connection con = null;
-		Statement st = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardVO> arr = new ArrayList<BoardVO>();
 		try {
 			con = getConnection();
-			String sql = "SELECT * FROM board";
-			st = con.createStatement();
-			rs = st.executeQuery(sql);
+			String sql = "SELECT * FROM (select rownum rn,aa.*from(select*from board order by ref desc,re_step asc)aa) where rn<=? and rn >=?";
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, startRow);
+			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				BoardVO board = new BoardVO();
@@ -106,7 +146,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con, st, rs);
+			closeConnection(con, pstmt, rs);
 		}
 		return arr;
 	}
@@ -120,8 +160,10 @@ public class BoardDAO {
 		
 		try {
 			con = getConnection();
-			String sql="SELECT * FROM board WHERE num="+num;
 			st = con.createStatement();
+			st.executeUpdate("UPDATE board SET readcount=readcount+1 where num="+num);
+			
+			String sql="SELECT * FROM board WHERE num="+num;
 			rs = st.executeQuery(sql);
 			
 			if(rs.next()) {
@@ -225,17 +267,19 @@ public class BoardDAO {
 	}
 	
 	// 검색기능
-	public ArrayList<BoardVO> boardList(String field, String word) {
+	public ArrayList<BoardVO> boardList(String field, String word,int startRow,int endRow) {
 		Connection con = null;
-		Statement st = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardVO> arr = new ArrayList<BoardVO>();
 		
 		try {
 			con = getConnection();
-			String sql = "SELECT * FROM board WHERE "+field+" like '%"+word+"%'";
-			st = con.createStatement();
-			rs = st.executeQuery(sql);
+			String sql = "SELECT * FROM (select rownum rn,aa.*from(select*from board WHERE "+field+" like '%"+word+"%' order by ref desc,re_step asc)aa) where rn<=? and rn >=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, startRow);
+			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				BoardVO board = new BoardVO();
@@ -250,7 +294,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			closeConnection(con, st, rs);
+			closeConnection(con, pstmt, rs);
 		}
 		return arr;
 	}
@@ -278,4 +322,56 @@ public class BoardDAO {
 		}
 		return count;
 	}
+	
+	// 댓글쓰기 추가 메소드
+	public void commentInsert(commentboardVO cvo) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConnection();
+			String sql = "INSERT INTO commentboard(cnum,userid,regdate,msg,bnum) VALUES (commentboard_seq.nextval,?,sysdate,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, cvo.getUserid());
+			pstmt.setString(2, cvo.getMsg());
+			pstmt.setInt(3, cvo.getBnum());
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, pstmt);
+		}
+	}
+	
+	// 댓글 보여지기 메소드, 댓글은 원글에서 따오기 때문에 원글의num이 반드시 필요함.
+	public ArrayList<commentboardVO> commentList(int num){
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<commentboardVO> arr = new ArrayList<commentboardVO>();
+		try {
+			con = getConnection();
+			String sql = "SELECT * FROM commentboard WHERE bnum ="+num+" ORDER BY cnum DESC";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				commentboardVO cvo = new commentboardVO();
+				cvo.setBnum(rs.getInt("bnum"));
+				cvo.setCnum(rs.getInt("cnum"));
+				cvo.setMsg(rs.getString("msg"));
+				cvo.setRegdate(rs.getString("regdate"));
+				cvo.setUserid(rs.getString("userid"));
+				arr.add(cvo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return arr;
+	}
+	
+	
 }

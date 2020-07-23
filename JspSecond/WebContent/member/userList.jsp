@@ -29,6 +29,7 @@
 	<a href="memberView.jsp"><%=loginID %></a>님 반갑습니다.
 	<a href="logout.jsp">로그아웃</a>
 	<a href="memberForm.jsp">회원가입하기</a>
+	<a href="../board/list.jsp">게시글 보기</a>
 </div>
 		<table class="table">
 			<thead class="thead-dark">
@@ -60,7 +61,6 @@
 			</tbody>
 			<tfoot>
 				<tr>
-				
 				</tr>
 			</tfoot>
 		</table>
