@@ -1,6 +1,7 @@
 package com.address.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,16 +14,16 @@ import com.address.model.SAddressDAO;
 import com.address.model.SAddressDTO;
 
 /**
- * Servlet implementation class InsertAction
+ * Servlet implementation class DetailAction
  */
-@WebServlet("/address/insert.do")
-public class InsertAction extends HttpServlet {
+@WebServlet("/address/detail.do")
+public class DetailAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertAction() {
+    public DetailAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,35 +32,22 @@ public class InsertAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		int num =  Integer.parseInt(request.getParameter("num"));
+		SAddressDAO dao = SAddressDAO.getinstance();
+		SAddressDTO arr =dao.addressDetail(num);
+		request.setAttribute("detail", arr);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("insert.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("detail.jsp");
 		rd.forward(request, response);
-
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-		request.setCharacterEncoding("utf-8");
-		String name = request.getParameter("name");
-		String zipcode = request.getParameter("zipcode");
-		String address = request.getParameter("address");
-		String tel = request.getParameter("tel");
-		
-		SAddressDTO sa = new SAddressDTO();
-		sa.setAddress(address);
-		sa.setName(name);
-		sa.setTel(tel);
-		sa.setZipcode(zipcode);
-		
-		SAddressDAO dao = SAddressDAO.getinstance();
-		dao.insertAddress(sa);
-		
-		// 해당 페이지로 넘어가면서 모든 권한 넘김.
-		response.sendRedirect("list.do");
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

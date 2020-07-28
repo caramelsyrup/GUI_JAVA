@@ -34,9 +34,12 @@ public class ListAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		SAddressDAO sa = SAddressDAO.getinstance();
+		int count = sa.addressCount();
 		ArrayList<SAddressDTO> arr = sa.addressList();
 		request.setAttribute("listArr", arr);
+		request.setAttribute("count", count);
 		
+		// 객체 정보를 가지고 페이지로 가기떄문에 화면에 뿌리는 등의 기능 수행 가능.
 		RequestDispatcher rd = request.getRequestDispatcher("list.jsp");
 		rd.forward(request, response);
 	}

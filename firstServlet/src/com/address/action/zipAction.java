@@ -1,6 +1,8 @@
 package com.address.action;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,20 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.address.model.SAddressDAO;
 import com.address.model.SAddressDTO;
+import com.address.model.ZipcodeDTO;
 
 /**
- * Servlet implementation class InsertAction
+ * Servlet implementation class zipAction
  */
-@WebServlet("/address/insert.do")
-public class InsertAction extends HttpServlet {
+@WebServlet("/address/zip.do")
+public class zipAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertAction() {
+    public zipAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,35 +37,37 @@ public class InsertAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		RequestDispatcher rd = request.getRequestDispatcher("insert.jsp");
-		rd.forward(request, response);
 
+		
+		RequestDispatcher rd = request.getRequestDispatcher("zipCheck.jsp");
+		rd.forward(request, response);
+		//		response.sendRedirect("zipCheck.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
 		request.setCharacterEncoding("utf-8");
-		String name = request.getParameter("name");
-		String zipcode = request.getParameter("zipcode");
-		String address = request.getParameter("address");
-		String tel = request.getParameter("tel");
-		
-		SAddressDTO sa = new SAddressDTO();
-		sa.setAddress(address);
-		sa.setName(name);
-		sa.setTel(tel);
-		sa.setZipcode(zipcode);
-		
+		String dong = request.getParameter("dong");
 		SAddressDAO dao = SAddressDAO.getinstance();
-		dao.insertAddress(sa);
+		ArrayList<ZipcodeDTO> arr =dao.zipSearch(dong);
+		JSONObject mainObj = new JSONObject();
+		JSONArray jarr = new JSONArray();
 		
-		// 해당 페이지로 넘어가면서 모든 권한 넘김.
-		response.sendRedirect("list.do");
+		for (ZipcodeDTO zip : arr) {
+			JSONObject obj = new JSONObject();
+			obj.put("zipcode", zip.getZipcode());
+			obj.put("sido", zip.getSido());
+			obj.put("gugun", zip.getGugun());
+			obj.put("dong", zip.getDong());
+			obj.put("bunji", zip.getBunji());
+			jarr.add(obj);
+		}
+		mainObj.put("jarr", jarr);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println(mainObj.toString());
 	}
 
 }
