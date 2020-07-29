@@ -1,5 +1,5 @@
 // 정규식 표현
-var exp = /^[0-9]{3}[1-9]{1}[0-9]{3}[0-9]{4}$/;
+var exp = /^[0-9]{3}[0-9]{4}[0-9]{4}$/;
 
 
 $(document).ready(function(){
@@ -35,7 +35,7 @@ $(document).ready(function(){
 			return false;
 		}
 		
-		$("#frm").submit();
+		$("#send").submit();
 	});
 	
 	$("#idChk").click(function(){

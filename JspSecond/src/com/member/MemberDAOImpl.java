@@ -12,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 
-
 public class MemberDAOImpl implements MemberDAO {
 	private static MemberDAOImpl instance = new MemberDAOImpl();
 	

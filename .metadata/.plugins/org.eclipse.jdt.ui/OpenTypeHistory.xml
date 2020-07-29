@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy/>
+<typeInfoHistroy>
+<typeInfo handle="=ServletTest02/C:\/Program Files\/Java\/jre1.8.0_202\/lib\/rt.jar&lt;com.sun.security.auth.callback(DialogCallbackHandler$Action.class[Action" modifiers="1546" timestamp="1590108190927"/>
+<typeInfo handle="=ServletTest02/src&lt;org.address.controller{Action.java[Action" modifiers="513" timestamp="1595986489994"/>
+</typeInfoHistroy>
