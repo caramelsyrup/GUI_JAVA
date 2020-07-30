@@ -44,10 +44,12 @@ $("#loginBtn").click(function(){
 			}else if(value.trim()==0){
 				alert("일반회원.");
 				// 제이쿼리
-				$(location).attr("href","view.me");
+//				$(location).attr("href","view.me");
+				location.href="view.me";
 			}else if(value.trim()==1){
 				alert("관리자.");
 				// 자바스크립트
+				// get 방식으로 넘어감. get은 보통 조회 할때 쓰는 방식
 				location.href="list.me";
 			}else if(value.trim()==2){
 				alert("암호가아닙니다.");

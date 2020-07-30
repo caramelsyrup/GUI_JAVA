@@ -3,15 +3,15 @@
 <%@ include file="../include/header.jsp" %>
 <div class="container">
   <h2>JOIN form</h2>
-  <form action="insert.me" method="post">
+  <form action="insert.me" method="post" id="frm">
     <div class="form-group">
       <label for="userId">UserId:</label>
-      <input type="text" class="form-control" id="userId" placeholder="userId" name="userId">
-      <button type="button" class="btn btn-primary" id="idChk" >ID_CHECK</button>
+      <input type="text" class="form-control" id="userId" placeholder="userId" name="userId"/>
+      <input type="button" class="btn btn-primary" id="idChkBtn" value="중복검사"/>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
-      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd"/>
     </div>
     <div class="form-group">
       <label for="name">Name:</label>
@@ -36,7 +36,7 @@
 	  </label>
 	</div>
 	<div>    
-	    <button type="button" class="btn btn-primary" id="send">Submit</button>
+	    <button class="btn btn-primary" id="send">Submit</button>
 	    <button type="reset" class="btn btn-primary">Cancel</button>
     </div>
   </form>

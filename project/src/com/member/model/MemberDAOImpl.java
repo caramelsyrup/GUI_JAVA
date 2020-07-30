@@ -61,7 +61,7 @@ public class MemberDAOImpl implements MemberDAO {
 			pstmt.setString(2, vo.getUserName());
 			pstmt.setString(3, vo.getUserPwd());
 			pstmt.setString(4, vo.getUserEmail());
-			pstmt.setString(5, vo.getUserTel());
+			pstmt.setInt(5, vo.getUserTel());
 			pstmt.setInt(6, vo.getAdmin());
 			pstmt.executeUpdate();
 			con.commit();
@@ -75,28 +75,107 @@ public class MemberDAOImpl implements MemberDAO {
 	// 멤버 목록 보기 메소드
 	@Override
 	public ArrayList<MemberDTO> memberList() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<MemberDTO> arr = new ArrayList<MemberDTO>();
+		
+		try {
+			con = getConnection();
+			String sql = "SELECT * FROM member ORDER BY admin DESC";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				MemberDTO dto  = new MemberDTO();
+				dto.setAdmin(rs.getInt("admin"));
+				dto.setUserEmail(rs.getString("useremail"));
+				dto.setUserID(rs.getString("userid"));
+				dto.setUserName(rs.getString("username"));
+				dto.setUserPwd(rs.getString("userpwd"));
+				dto.setUserTel(rs.getInt("usertel"));
+				arr.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return arr;
 	}
 	
 	// 멤버 정보 수정 메소드
 	@Override
 	public int memberUpdate(MemberDTO vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int flag =0;
+		 try {
+			con = getConnection();
+			String sql = "UPDATE member SET username=?,useremail=?,usertel=?,admin=? WHERE userid=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getUserName());
+			pstmt.setString(2, vo.getUserEmail());
+			pstmt.setInt(3, vo.getUserTel());
+			pstmt.setInt(4, vo.getAdmin());
+			pstmt.setString(5, vo.getUserID());
+			flag = pstmt.executeUpdate();
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, pstmt);
+		}
+		return flag;		
 	}
 	
 	// 멤버 정보 상세 보기 메소드
 	@Override
 	public MemberDTO memberDetail(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		MemberDTO dto = null;
+		try {
+			con = getConnection();
+			String sql = "SELECT * FROM member WHERE userid = '"+userID+"'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+
+			if(rs.next()) {
+				dto = new MemberDTO();
+				dto.setAdmin(rs.getInt("admin"));
+				dto.setUserEmail(rs.getString("useremail"));
+				dto.setUserID(rs.getString("userid"));
+				dto.setUserName(rs.getString("username"));
+				dto.setUserPwd(rs.getString("userpwd"));
+				dto.setUserTel(rs.getInt("usertel"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
 	}
 	
 	// 멤버 삭제 메소드
 	@Override
 	public void memberDelete(String userID) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = getConnection();
+			String sql = "DELETE FROM member WHERE userid = '"+userID+"'";
+			st = con.createStatement();
+			st.executeUpdate(sql);
+			con.commit();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	finally {
+			closeConnection(con, st, null);
+		}
 		
 	}
 	
@@ -159,8 +238,24 @@ public class MemberDAOImpl implements MemberDAO {
 	// 가입된 멤버 개수 세기 메소드
 	@Override
 	public int memberCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			con = getConnection();
+			String sql = "SELECT COUNT(userid) FROM member";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return count;
 	}
 	
 

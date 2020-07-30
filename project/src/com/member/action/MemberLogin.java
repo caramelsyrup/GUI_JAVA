@@ -47,7 +47,6 @@ public class MemberLogin extends HttpServlet {
 		String userPwd = request.getParameter("pwd");
 		
 		MemberDAOImpl dao = MemberDAOImpl.getinstance();
-		MemberDTO member = new MemberDTO();
 		int flag = dao.loginCheck(userID, userPwd);
 		
 		if(flag==0 || flag==1){

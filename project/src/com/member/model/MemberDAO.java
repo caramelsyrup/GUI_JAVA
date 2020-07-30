@@ -20,4 +20,5 @@ public interface MemberDAO {
 		public int loginCheck(String userID, String userPwd );
 		
 		public int memberCount();
+
 }

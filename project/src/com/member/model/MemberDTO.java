@@ -1,8 +1,8 @@
 package com.member.model;
 
 public class MemberDTO {
-	private String userName,userID,userPwd,userEmail,userTel;
-	private int admin;
+	private String userName,userID,userPwd,userEmail;
+	private int userTel,admin;
 	
 	public String getUserName() {
 		return userName == null ? "" : userName.trim();
@@ -28,10 +28,10 @@ public class MemberDTO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public String getUserTel() {
-		return userTel == null ? "" : userTel.trim();
+	public int getUserTel() {
+		return userTel;
 	}
-	public void setUserTel(String userTel) {
+	public void setUserTel(int userTel) {
 		this.userTel = userTel;
 	}
 	public int getAdmin() {

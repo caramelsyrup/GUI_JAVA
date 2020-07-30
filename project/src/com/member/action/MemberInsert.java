@@ -48,7 +48,7 @@ public class MemberInsert extends HttpServlet {
 		member.setUserID(request.getParameter("userId"));
 		member.setUserName(request.getParameter("name"));
 		member.setUserPwd(request.getParameter("pwd"));
-		member.setUserTel(request.getParameter("phone"));
+		member.setUserTel(Integer.parseInt(request.getParameter("phone")));
 		dao.memberInsert(member);
 		
 		response.sendRedirect("login.me");
