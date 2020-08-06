@@ -99,17 +99,22 @@ public class GuestDAO {
 		}
 		return arr;
 	}
+	
 	// 수 세기
-	public int guestCount() {
+	public int guestCount(String field, String word) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		int count=0;
-		
+		String sql ="";
 		try {
 			con = getConnection();
-			String sql = "SELECT COUNT(num) FROM guestbook";
 			st = con.createStatement();
+			if(word.equals("")) {
+				sql = "SELECT COUNT(num) FROM guestbook";
+			}else {
+				sql = "SELECT COUNT(num) FROM guestbook WHERE "+field+" LIKE '%"+word+"%'";
+			}
 			rs = st.executeQuery(sql);
 			if(rs.next()) {
 				count = rs.getInt(1);
@@ -120,6 +125,47 @@ public class GuestDAO {
 			closeConnection(con, st, rs);
 		}
 		return count;
+	}
+	
+	// 검색기능 추가된 페이징.
+	public ArrayList<GuestDTO> guestList(String field, String word, int startRow, int endRow) {
+		Connection con = null;
+		Statement st = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<GuestDTO> arr = new ArrayList<GuestDTO>();
+		
+		try {
+			con = getConnection();
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("select * from");
+			sb.append(" (select aa.*, rownum rn from");
+			sb.append(" (select * from guestbook where "+field+" like '%"+word+"%'");
+			sb.append("order by num desc) aa");
+			sb.append(" where rownum<=? ) where rn>=?");
+			
+			pstmt = con.prepareStatement(sb.toString());
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, startRow);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				GuestDTO guest = new GuestDTO();
+				guest.setNum(rs.getInt("num"));
+				guest.setWritter(rs.getString("writter"));
+				guest.setContent(rs.getString("content"));
+				guest.setGrade(rs.getString("grade"));
+				guest.setCreated(rs.getString("created"));
+				guest.setIpaddr(rs.getString("ipaddr"));
+				arr.add(guest);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return arr;
 	}
 	
 	// 전체보기 페이징
@@ -163,36 +209,84 @@ public class GuestDAO {
 	}
 	
 	// 상세보기
-	public ArrayList<GuestDTO> guestView(int num){
+	public GuestDTO guestView(int num){
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		ArrayList<GuestDTO> arr = new ArrayList<GuestDTO>();
+		GuestDTO guest = null;
 		
 		try {
 			con = getConnection();
-			String sql = "SELECT * FROM guestbook WEHRE num ="+num;
+			String sql = "SELECT * FROM guestbook WHERE num ="+num;
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			
 			if(rs.next()) {
-				GuestDTO guest = new GuestDTO();
-				guest.setNum(rs.getInt("num"));
+				guest =  new GuestDTO();
+				guest.setNum(num);
 				guest.setWritter(rs.getString("writter"));
 				guest.setContent(rs.getString("content"));
 				guest.setGrade(rs.getString("grade"));
 				guest.setCreated(rs.getString("created"));
 				guest.setIpaddr(rs.getString("ipaddr"));
-				arr.add(guest);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeConnection(con, st, rs);
 		}
-		return arr;
+		return guest;
 	}
 	
+	//삭제 기능.
+	public void guestDelete(int num) {
+		Connection con = null;
+		Statement st = null;
+		
+		try {
+			con = getConnection();
+			st = con.createStatement();
+			String sql = "DELETE FROM guestbook WHERE num = "+num;
+			st.executeQuery(sql);
+			con.commit();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, null);
+		}
+	}
+	
+	// 로그인 판단
+	public int guestLoginCheck(String id, String pw) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		String sql = "";
+		int flag =-1;	// 초기, id,pw 모두 값이 없음.
+		
+		try {
+			con = getConnection();
+			st = con.createStatement();
+			sql = "SELECT userpwd FROM member WHERE userid = '"+id+"'";
+			rs = st.executeQuery(sql);
+			
+			if(rs.next()) {	// id는 존재함.
+				if(rs.getString("userpwd").equals(pw)) {	// pw도 존재하는가?
+					 return 1;	// 회원
+				}else {
+					 return 0; // 비번 안맞음
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, st, rs);
+		}
+		return flag;
+	}
 	
 	
 }

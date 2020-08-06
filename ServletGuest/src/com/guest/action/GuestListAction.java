@@ -44,12 +44,14 @@ public class GuestListAction extends HttpServlet {
 		GuestDAO dao = GuestDAO.getinstance();
 		// 페이지를 구분하여, 설정하기 위한 변수 설정.
 		String pageNum = request.getParameter("pageNum")==null? "1":request.getParameter("pageNum");
+		String field = request.getParameter("field")==null? "":request.getParameter("field");
+		String word = request.getParameter("word")==null? "":request.getParameter("word");
 		int currentPage = Integer.parseInt(pageNum);
 		int pageSize = 5;
 		int startRow=(currentPage-1)*pageSize+1;
 		int endRow=currentPage*pageSize;
 		
-		int count = dao.guestCount();
+		int count = dao.guestCount(field,word);
 		
 		int totalpage = (count/pageSize)+(count%pageSize==0?0:1);
 		int pageBlock = 3;
@@ -63,9 +65,15 @@ public class GuestListAction extends HttpServlet {
 		pu.setPageBlock(pageBlock);
 		pu.setStartPage(startPage);
 		pu.setTotalpage(totalpage);
+		pu.setField(field);
+		pu.setWord(word);
 		
-		
-		ArrayList<GuestDTO>arr = dao.guestList(startRow,endRow);
+		ArrayList<GuestDTO> arr = null;
+		if(word.equals("")) {
+			arr = dao.guestList(startRow, endRow);
+		}else {
+			arr = dao.guestList(field, word, startRow, endRow);
+		}
 		
 		int rowNo = count-((currentPage-1)*pageSize);	// 매 페이지의 시작번호. DB와 연결된 번호는 아니다.
 		

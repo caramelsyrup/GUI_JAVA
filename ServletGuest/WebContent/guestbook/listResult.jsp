@@ -14,6 +14,9 @@
 				<th scope="col">평가</th>
 				<th scope="col">작성일</th>
 				<th scope="col">아이피</th>
+				<c:if test="${login!=null}">
+					<th scope="col">삭제</th>
+				</c:if>
 			</tr>
 		</thead>
 		<tbody>
@@ -40,6 +43,11 @@
 					<td>
 						${guest.ipaddr}
 					</td>
+					<c:if test="${sessionScope.login!=null}">
+						<td>
+							<a href="javascript:fdelete(${guest.num},'${guest.writter}')">삭제</a>
+						</td>
+					</c:if>
 				</tr>
 			</c:forEach>
 		</tbody>	
@@ -47,7 +55,7 @@
 	<div align="center">
 		<!-- 이전 -->
 		<c:if test="${pu.startPage>pu.pageBlock}">
-			<a href="javascript:getdata(${pu.startPage-pu.pageBlock})">[이전]</a>
+			<a href="javascript:getdata(${pu.startPage-pu.pageBlock},'${pu.field}','${pu.word}')">[이전]</a>
 		</c:if>
 		<!-- 페이지 출력 -->
 		<c:forEach begin="${pu.startPage}" end="${pu.endPage}" var="i">
@@ -55,11 +63,14 @@
 				<c:out value="${i}"/>
 			</c:if>
 			<c:if test="${i!=pu.currentPage}">
-				<a href="javascript:getdata(${i})">${i}</a>
+				<a href="javascript:getdata(${i},'${pu.field}','${pu.word}')">${i}</a>
 			</c:if>
 		</c:forEach>
 		<!-- 다음 -->
 		<c:if test="${pu.endPage<pu.totalpage}">
-			<a href="javascript:getdata(${pu.endPage+1})">[다음]</a>
+			<a href="javascript:getdata(${pu.endPage+1},'${pu.field}','${pu.word}')">[다음]</a>
 		</c:if>
+	</div>
+	<hr>
+	<div id="view">
 	</div>
