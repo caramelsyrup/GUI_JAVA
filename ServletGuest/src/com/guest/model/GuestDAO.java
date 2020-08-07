@@ -180,10 +180,15 @@ public class GuestDAO {
 			con = getConnection();
 
 			StringBuilder sb = new StringBuilder();
+			// 1. 모든 것을 조회 해라. 2가 충족된 조건 하의, 그리고 4에서 행번호가 시작번호보다 크거나 같은 조건 하에서
 			sb.append("select * from");
-			sb.append(" (select aa.*, rownum rn from");
-			sb.append(" (select * from guestbook order by num desc) aa");
+			// 2. guestbook의 모든 데이터로 부터 행번호(rownum)과 abc의 모든 데이터를 조회하는데, 4의  행번호가 끝번호보다 작거나 같은 조건을 충족하는 경우
+			sb.append(" (select abc.*, rownum rn from");
+			// 3. guestbook의 모든 데이터를 조회하는데, 이것을  abc로 명명
+			sb.append(" (select * from guestbook order by num desc) abc");
+			// 4. 행번호가 끝번호보다는 작거나 같아야한다. 그리고 행번호가 시작번호보다는 크거나 같아야한다.
 			sb.append(" where rownum<=? ) where rn>=?");
+			
 			pstmt = con.prepareStatement(sb.toString());
 			pstmt.setInt(1, endRow);
 			pstmt.setInt(2, startRow);
@@ -207,6 +212,7 @@ public class GuestDAO {
 		}
 		return arr;
 	}
+	
 	
 	// 상세보기
 	public GuestDTO guestView(int num){
