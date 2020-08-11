@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.member.MemberDAOImpl"/>
 <fullyQualifiedTypeName name="com.member.MemberVO"/>
 <fullyQualifiedTypeName name="com.board.BoardDAO"/>
 <fullyQualifiedTypeName name="com.board.BoardVO"/>
@@ -28,12 +27,9 @@
 <fullyQualifiedTypeName name="org.address.controller.AddressDetailAction"/>
 <fullyQualifiedTypeName name="org.address.model.SAddressDAO"/>
 <fullyQualifiedTypeName name="org.address.model.ZipcodeDTO"/>
-<fullyQualifiedTypeName name="com.member.model.MemberDAO"/>
 <fullyQualifiedTypeName name="javax.websocket.Session"/>
 <fullyQualifiedTypeName name="org.apache.catalina.Session"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
-<fullyQualifiedTypeName name="com.member.model.MemberDAOImpl"/>
-<fullyQualifiedTypeName name="com.member.model.MemberDTO"/>
 <fullyQualifiedTypeName name="com.guest.model.PageUtil"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="com.sun.corba.se.spi.orbutil.fsm.Guard.Result"/>
@@ -44,20 +40,24 @@
 <fullyQualifiedTypeName name="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"/>
 <fullyQualifiedTypeName name="org.apache.naming.SelectorContext"/>
 <fullyQualifiedTypeName name="javax.servlet.ServletContext"/>
-<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="com.board.model.PageBean"/>
 <fullyQualifiedTypeName name="com.board.model.BoardDTO"/>
-<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
-<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="com.board.model.BoardDAO"/>
 <fullyQualifiedTypeName name="com.board.model.BoardDAOImpl"/>
-<fullyQualifiedTypeName name="java.sql.Connection"/>
-<fullyQualifiedTypeName name="java.sql.Statement"/>
-<fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONArray"/>
 <fullyQualifiedTypeName name="com.board.model.CommentDTO"/>
 <fullyQualifiedTypeName name="org.json.simple.JSONObject"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="javax.servlet.RequestDispatcher"/>
+<fullyQualifiedTypeName name="com.member.model.MemberDAO"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="com.member.model.MemberDTO"/>
+<fullyQualifiedTypeName name="com.member.model.MemberDAOImpl"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.member.model.AddressDTO"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="java.sql.Statement"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
 </qualifiedTypeNameHistroy>

@@ -6,7 +6,16 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
+		<item key="selection" value="nav"/>
 		<list key="findhistory">
+			<item value="nav"/>
+			<item value="color"/>
+			<item value="items"/>
+			<item value="row"/>
+			<item value="navi"/>
+			<item value="navbar"/>
+			<item value="navbarResponsive"/>
+			<item value="page"/>
 			<item value="&quot;input:radio[name=grade]:checked&quot;).val()"/>
 		</list>
 		<list key="replacehistory">

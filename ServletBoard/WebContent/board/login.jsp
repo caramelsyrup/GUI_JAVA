@@ -68,8 +68,6 @@
 	</c:if>
 </div>
 </nav>
-
-    
 <div class="container">
   <h2>LOGIN form</h2>
   <form action="commentInsert" method="post">
@@ -130,7 +128,6 @@ $("#loginBtn").click(function(){
 	});	// $.ajax
 });	// loginBtn
 </script>
-
 <div class="jumbotron text-center" style="margin-bottom:0">
   <p>Footer</p>
 </div>
