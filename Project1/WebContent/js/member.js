@@ -1,4 +1,5 @@
 
+
 $(document).ready(function(){
 	// 아이디 중복확인 페이지 이동
 	$("#idChkBtn").click(function(){
@@ -36,8 +37,12 @@ $(document).ready(function(){
 		});	// ajax
 		
 	});
+	
 	// 주소 검색 버튼
 	$("#addrBtn").click(function(){
 		window.open("addrCheck.do","","width=800 height=600");
 	});
+	
+	
+	
 });

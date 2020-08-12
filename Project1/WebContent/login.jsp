@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<%@ include file="header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
@@ -37,14 +37,38 @@ $("#loginbtn").click(function(){
 		$("#userid").focus();
 		return false;
 	}
+	
 	if($("#userpwd").val()==""){
 		alert("비밀번호를 입력하세요.");
 		$("#userpwd").focus();
 		return false;
 	}
 	
+	$.ajax({
+		type:"post",
+		url:"login.do",
+		data:{"userid":$("#userid").val(),"userpwd":$("#userpwd").val()},
+		success :function(value){
+			if(value.trim()==-1){
+				alert("회원아닙니다.");
+				location.href="join.do";
+			}else if(value.trim()==0){
+				alert("일반회원.");
+				location.href="main.do";
+			}else if(value.trim()==1){
+				alert("관리자.");
+				location.href="main.do";
+			}else if(value.trim()==2){
+				alert("암호가아닙니다.");
+			}
+		},
+		error : function(e){
+			alert("error : "+e);
+		}
+	});	// $.ajax
+	
 })
 </script>
 </body>
 </html>
-<%@ include file="footer.jsp"%>
+<%@ include file="../include/footer.jsp"%>

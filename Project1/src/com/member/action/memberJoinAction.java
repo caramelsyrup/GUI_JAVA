@@ -39,20 +39,23 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		request.setCharacterEncoding("utf-8");
 		
 		MemberDAOImpl dao = MemberDAOImpl.getInstance();
+		
 		MemberDTO member = new MemberDTO();
 		member.setUseraddr(request.getParameter("useraddr"));
 		member.setUseremail(request.getParameter("useremail"));
 		member.setUserid(request.getParameter("userid"));
 		member.setUserpwd(request.getParameter("userpwd"));
 		member.setUsertel(request.getParameter("usertel"));
+		member.setUserzipcode(request.getParameter("userzipcode"));
+		member.setUsername(request.getParameter("username"));
+		
 		dao.memberInsert(member);
 		
 		response.sendRedirect("login.do");
-		
-		
 
 	}
 

@@ -56,13 +56,15 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		try {
 			con = getconnection();
-			String sql = "INSERT INTO member VALUES (member_seq.nextval,?,?,?,?,?,default)";
+			String sql = "INSERT INTO member VALUES (member_seq.nextval,?,?,?,?,?,default,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1,vo.getUserid());
 			pstmt.setString(2, vo.getUserpwd());
 			pstmt.setString(3, vo.getUseraddr());
 			pstmt.setString(4, vo.getUsertel());
 			pstmt.setString(5, vo.getUseremail());
+			pstmt.setString(6, vo.getUserzipcode());
+			pstmt.setString(7, vo.getUsername());
 			pstmt.executeUpdate();
 			con.commit();
 		} catch (Exception e) {
@@ -78,10 +80,34 @@ public class MemberDAOImpl implements MemberDAO {
 		return 0;
 	}
 
-	@Override
+	@Override	// 회원정보 상세조회
 	public MemberDTO memberDetail(String userID) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		MemberDTO member = new MemberDTO();;
+		try {
+			con = getconnection();
+			String sql = "SELECT * FROM member WHERE userid ='"+userID+"'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				member.setAdmin(rs.getInt("admin"));
+				member.setNum(rs.getInt("num"));
+				member.setUseraddr(rs.getString("useraddr"));
+				member.setUseremail(rs.getString("useremail"));
+				member.setUserid(rs.getString("userid"));
+				member.setUsername(rs.getString("username"));
+				member.setUserpwd(rs.getString("userpwd"));
+				member.setUsertel(rs.getString("usertel"));
+				member.setUserzipcode(rs.getString("userzipcode"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeconnection(con, st, rs);
+		}
+		return member;
 	}
 
 	@Override
@@ -122,7 +148,7 @@ public class MemberDAOImpl implements MemberDAO {
 		
 		try {
 			con = getconnection();
-			String sql = "SELECT userpwd FROM member WHERE userid = '"+userID+"'";
+			String sql = "SELECT userpwd,admin FROM member WHERE userid = '"+userID+"'";
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			
@@ -143,7 +169,6 @@ public class MemberDAOImpl implements MemberDAO {
 		} finally {
 			closeconnection(con, st, rs);
 		}
-		
 		return -2;	// db에 없음.
 	}
 
@@ -157,21 +182,27 @@ public class MemberDAOImpl implements MemberDAO {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		
+		ArrayList<AddressDTO> arr = new ArrayList<AddressDTO>();
 		try {
 			con = getconnection();
-			String sql = "SELECT * FROM address WHERE dong LIKE %'"+dong+"%'";
+			String sql = "SELECT * FROM address WHERE dong LIKE '%"+dong+"%'";
 			st = con.createStatement();
 			rs = st.executeQuery(sql);
 			while(rs.next()) {
-				
+				AddressDTO address = new AddressDTO();
+				address.setZipcode(rs.getString("zipcode"));
+				address.setSido(rs.getString("sido"));
+				address.setGugun(rs.getString("gugun"));
+				address.setDong(rs.getString("dong"));
+				address.setBunji(rs.getString("bunji"));
+				arr.add(address);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			closeconnection(con, st, rs);
 		}
-		
-		return null;
+		return arr;
 	}
 	
 }

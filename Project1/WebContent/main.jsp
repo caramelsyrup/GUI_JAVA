@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="../include/header.jsp" %>
 <!-- Main -->
 <div id="main">
 	<div class="container">
@@ -28,6 +28,6 @@
 		</div>
 	</div>
 </div>
-<%@ include file="footer.jsp" %>
+<%@ include file="../include/footer.jsp" %>
 </body>
 </html>
