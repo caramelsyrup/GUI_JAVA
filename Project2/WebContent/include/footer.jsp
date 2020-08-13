@@ -9,7 +9,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>   
 
 	<div id="footer">
-		<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>. Photos by <a href="http://fotogrph.com/">Fotogrph</a>  + <a href="http://iconify.it/">Iconify.it</a></p>
+		<p>&copy; Untitled. All rights reserved. 대한민국 미술관, 서울시, 대한민국.<a href="http://fotogrph.com/">위키백과</a>  + <a href="http://iconify.it/">구글</a></p>
 	</div>	
 </div>
 </body>

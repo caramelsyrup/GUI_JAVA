@@ -96,8 +96,8 @@ hr {
 #logo {
 	width: 100%;
 	height: 150px;
-	margin: 0px auto 30px auto;
-	color: #000000;
+	margin: 30px auto 10px auto;
+	color: #454545;
 }
 #logo ul{
 	display: inline;
@@ -107,6 +107,8 @@ hr {
 	list-style-type: none;
 	float: right;
 	margin:10px;
+	font-size: 0.9em;
+	font-weight: bold;
 }
 
 #logo h1, #logo p {
@@ -120,6 +122,8 @@ hr {
 	text-align: center;
 	text-transform: lowercase;
 	font-size: 5em;
+	font-weight:bold;
+	text-shadow: 0.5px 10px 8px 0.2px gray;
 	color: #1F1F1F;
 }
 
@@ -175,8 +179,8 @@ hr {
 	line-height: 70px;
 	text-decoration: none;
 	text-align: center;
-	font-size: 14px;
-	font-weight: 200;
+	font-size: 18px;
+	font-weight: bold;
 	color: #FFFFFF;
 	border: none;
 }
@@ -200,12 +204,19 @@ hr {
 /** CONTENT */
 
 #content {
-	
+	margin: 0 auto;
 }
 
 /** SIDEBAR */
 
 #sidebar {
+}
+
+/** table */
+
+table{
+	margin: 0 auto;
+	border: 1px solid black;
 }
 
 /* Footer */
@@ -270,18 +281,19 @@ hr {
 #welcome {
 	width: 100%;
 	margin: 0px auto;
-	padding: 30px 30px;
+	padding: 10px 10px;
 }
 
 #welcome .content {
-	padding: 0px 0px 40px 0px;
+	padding: 0px 0px 10px 0px;
 	border-bottom: 1px solid #D4D4D4;
 }
 
 #welcome h2 {
 	text-align:center;
 	font-size:3em;
-	padding: 0px 0px 10px 0px;
+	margin: 10px auto;
+	padding: 0px 0px 5px 0px;
 }
 
 #welcome h2 a {
@@ -335,21 +347,50 @@ hr {
 	padding: 40px 50px 50px 50px;
 }
 
+#two-columns .content {
+	overflow: hidden;
+	padding: 0px 0px 10px 0px;
+}
+
 #two-columns h2 {
-	padding: 0px 0px 20px 0px;
+	margin: 0 auto;
+	padding: 0px 0px 10px 0px;
 	color: #000000;
+	text-align: center;
 }
 
 #two-columns #col1 {
-	float: right;
-	width: 740px;
-}
-#two-columns #col1 h2{
-	padding-left: 500px;
-}
-#two-columns #col2 {
 	float: left;
-	width: 320px;
+	width: 600px;
+}
+
+#two-columns #col1 h2{
+	padding-left: 0px;
+}
+
+#two-columns #col1 #updatememberBtn {
+	margin-top: 30px;
+	margin-left: 200px;
+}
+
+#two-columns #col1 ul li label {
+	margin-left: 20px;
+	font-size:1.2em;
+	color: #2f005e;
+	font-weight: 250;
+}
+
+#two-columns #col1 ul li input {
+	margin-left: 20px;
+}
+
+#two-columns #col2 {
+	float: right;
+	width: 500px;
+}
+
+#two-columns #col2 h2{
+	padding-right: 0px;
 }
 
 /* one-column */
@@ -357,10 +398,13 @@ hr {
 	overflow: hidden;
 	width: 100%;
 	margin: 0px auto;
-	padding: 0px 0px 50px 50px;
+	padding: 0px 0px 10px 10px;
 }
 #one-column #area{
 	text-align: center;
+}
+#one-column #area {
+	
 }
 
 /* List Style 1 */
@@ -372,8 +416,9 @@ hr {
 }
 
 .list-style1 li {
-	padding: 20px 0px 20px 0px;
-	border-top: 1px solid #D4D4D4;
+	padding: 5px 0px 5px 0px;
+	width: 570px;
+	border-bottom: 1.5px dotted #D4D4D4;
 }
 
 .list-style1 .date {

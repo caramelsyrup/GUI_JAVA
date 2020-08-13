@@ -7,4 +7,9 @@ public interface ArtWorkDAO {
 	public ArrayList<ArtWorkDTO> artworkList();
 	// 작품 추가
 	public void artworkInsert(ArtWorkDTO art);
+	// 작품 상세 보기
+	public ArtWorkDTO artworkDetail(int artid);
+	// 작품 삭제 하기
+	public void artworkDelete(int artid);
+	
 }

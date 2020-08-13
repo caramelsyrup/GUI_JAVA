@@ -1,7 +1,6 @@
-package com.member.action;
+package com.artworks.action;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,20 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.member.model.MemberDAOImpl;
-import com.member.model.MemberDTO;
+import com.artworks.model.ArtWorkDAOImpl;
 
 /**
- * Servlet implementation class memberListAction
+ * Servlet implementation class ArtworkDeleteAction
  */
-@WebServlet("/memberlist.do")
-public class memberListAction extends HttpServlet {
+@WebServlet("/artworkDelete.do")
+public class ArtworkDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberListAction() {
+    public ArtworkDeleteAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,15 +30,15 @@ public class memberListAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		request.setCharacterEncoding("utf-8");
-		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		ArrayList<MemberDTO> arr = dao.memberList();
 		
-		request.setAttribute("memberlist", arr);
+		int artid = Integer.parseInt(request.getParameter("artidDelete"));
 		
-		RequestDispatcher rd = request.getRequestDispatcher("memberList.jsp");
-		rd.forward(request, response);
+		ArtWorkDAOImpl dao = ArtWorkDAOImpl.getInstance();
+		dao.artworkDelete(artid);
+		
+		response.sendRedirect("artworkList.do");
+		
 	}
 
 	/**

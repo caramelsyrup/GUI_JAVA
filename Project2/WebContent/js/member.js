@@ -28,7 +28,7 @@ $(document).ready(function(){
 					location.href="main.do";
 				}else if(value.trim()==1){
 					alert("관리자.");
-					location.href="manage.do";
+					location.href="memberlist.do";
 				}else if(value.trim()==2){
 					alert("암호가아닙니다.");
 				}
@@ -62,12 +62,12 @@ $(document).ready(function(){
 				// 데이터를 url에 저장되어 있는 메소드와 비교
 				if(val.trim()=="yes"){
 					alert("사용가능");
-					$(opener.document).find("#userid").val($("#usr").val());
-					$(opener.document).find("#uid").val($("#usr").val());
+					$(opener.document).find("#juserid").val($("#usr").val());
+//					$(opener.document).find("#uid").val($("#usr").val());
 					self.close();
 				}else if(val.trim()=="no"){
 					alert("사용불가능");
-					$("#userid").val("");
+					$("#juserid").val("");
 				}
 			},
 			error:function(e){
@@ -146,7 +146,30 @@ $(document).ready(function(){
 			$("#usertel").focus();
 			return false;
 		}
-		$("#joinbtn").submit();
+		$("#joinform").submit();
+	});
+	
+	// 관리자-회원 상세 정보-정보수정
+	$("#updatememberBtn").click(function(){
+		if(confirm('정말로 수정 하시겠습니까?')){
+			$("#memberUpdateform").submit();
+		}
+	});
+	
+	$("#deletememberBtn").click(function(){
+		if(confirm('정말로 삭제 하시겠습니까?')){
+			$.ajax({
+				type:"post",
+				url:"memberdelete.do",
+				data:{"userid":$("#upuserid").val()},
+				success:function(val){
+					
+				},
+				error:function(e){
+					alert(e);
+				}
+			});
+		}
 	});
 	
 	

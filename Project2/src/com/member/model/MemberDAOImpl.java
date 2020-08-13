@@ -74,9 +74,28 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 	}
 
-	@Override
+	@Override	// 회원정보 수정
 	public int memberUpdate(MemberDTO vo) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = getconnection();
+			String sql = "UPDATE member SET userpwd=?,useraddr=?,usertel=?,useremail=?,username=?,userzipcode=? WHERE userid =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getUserpwd());
+			pstmt.setString(2, vo.getUseraddr());
+			pstmt.setString(3, vo.getUsertel());
+			pstmt.setString(4, vo.getUseremail());
+			pstmt.setString(5, vo.getUsername());
+			pstmt.setString(6, vo.getUserzipcode());
+			pstmt.setString(7, vo.getUserid());
+			pstmt.executeUpdate();
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeconnection(con, pstmt);
+		}
 		return 0;
 	}
 
@@ -109,11 +128,23 @@ public class MemberDAOImpl implements MemberDAO {
 		}
 		return member;
 	}
-
-	@Override
+	
+	@Override	// 회원탈퇴
 	public void memberDelete(String userID) {
-		// TODO Auto-generated method stub
+		Connection con = null;
+		Statement st = null;
 		
+		try {
+			con = getconnection();
+			st = con.createStatement();
+			String sql = "DELETE FROM member WHERE userid ='"+userID+"'";
+			st.executeUpdate(sql);
+			con.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeconnection(con, st, null);
+		}
 	}
 
 	@Override	// id 중복체크

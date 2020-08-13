@@ -1,4 +1,4 @@
-package com.member.action;
+package com.artworks.action;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.member.model.MemberDAOImpl;
-import com.member.model.MemberDTO;
+import com.artworks.model.ArtWorkDAOImpl;
+import com.artworks.model.ArtWorkDTO;
 
 /**
- * Servlet implementation class memberJoinAction
+ * Servlet implementation class ArtworkDetailAction
  */
-@WebServlet("/join.do")
-public class memberJoinAction extends HttpServlet {
+@WebServlet("/artworkDetail.do")
+public class ArtworkDetailAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberJoinAction() {
+    public ArtworkDetailAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,32 +31,25 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("join.jsp");
+		request.getParameter("utf-8");
+		
+		int artid = Integer.parseInt(request.getParameter("artid"));
+		ArtWorkDAOImpl dao = ArtWorkDAOImpl.getInstance();
+		ArtWorkDTO artDto =  dao.artworkDetail(artid);
+		
+		request.setAttribute("artDetail", artDto);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("artworkDetail.jsp");
 		rd.forward(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("utf-8");
-		
-		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		
-		MemberDTO member = new MemberDTO();
-		member.setUseraddr(request.getParameter("useraddr"));
-		member.setUseremail(request.getParameter("useremail"));
-		member.setUserid(request.getParameter("juserid"));
-		member.setUserpwd(request.getParameter("juserpwd"));
-		member.setUsertel(request.getParameter("usertel"));
-		member.setUserzipcode(request.getParameter("userzipcode"));
-		member.setUsername(request.getParameter("username"));
-		
-		dao.memberInsert(member);
-		
-		response.sendRedirect("login.do");
-
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

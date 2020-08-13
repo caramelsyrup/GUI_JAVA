@@ -10,19 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.member.model.MemberDAOImpl;
-import com.member.model.MemberDTO;
 
 /**
- * Servlet implementation class memberJoinAction
+ * Servlet implementation class memberDeleteAction
  */
-@WebServlet("/join.do")
-public class memberJoinAction extends HttpServlet {
+@WebServlet("/memberdelete.do")
+public class memberDeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberJoinAction() {
+    public memberDeleteAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +30,12 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("join.jsp");
+		request.setCharacterEncoding("utf-8");
+		
+		MemberDAOImpl dao = MemberDAOImpl.getInstance();
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("memberlist.do");
 		rd.forward(request, response);
 	}
 
@@ -39,24 +43,8 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("utf-8");
-		
-		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		
-		MemberDTO member = new MemberDTO();
-		member.setUseraddr(request.getParameter("useraddr"));
-		member.setUseremail(request.getParameter("useremail"));
-		member.setUserid(request.getParameter("juserid"));
-		member.setUserpwd(request.getParameter("juserpwd"));
-		member.setUsertel(request.getParameter("usertel"));
-		member.setUserzipcode(request.getParameter("userzipcode"));
-		member.setUsername(request.getParameter("username"));
-		
-		dao.memberInsert(member);
-		
-		response.sendRedirect("login.do");
-
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

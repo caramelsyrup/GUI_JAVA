@@ -1,4 +1,4 @@
-package com.member.action;
+package com.artworks.action;
 
 import java.io.IOException;
 
@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.member.model.MemberDAOImpl;
-import com.member.model.MemberDTO;
+import com.artworks.model.ArtWorkDAOImpl;
+import com.artworks.model.ArtWorkDTO;
 
 /**
- * Servlet implementation class memberJoinAction
+ * Servlet implementation class DisplayInsertAction
  */
-@WebServlet("/join.do")
-public class memberJoinAction extends HttpServlet {
+@WebServlet("/artworkInsert.do")
+public class ArtworkInsertAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberJoinAction() {
+    public ArtworkInsertAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,7 +31,23 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("join.jsp");
+		request.setCharacterEncoding("utf-8");
+		String arttitle = request.getParameter("arttitle");
+		String artmaker = request.getParameter("artmaker");
+		String artdescription = request.getParameter("artdescription");
+		String filename =  request.getParameter("afilename");
+		
+		ArtWorkDTO art = new ArtWorkDTO();
+		art.setArtdescription(artdescription);
+		art.setArtmaker(artmaker);
+		art.setArttitle(arttitle);
+		art.setFilename(filename);
+		
+		ArtWorkDAOImpl dao = ArtWorkDAOImpl.getInstance();
+		dao.artworkInsert(art);
+		
+		
+		RequestDispatcher rd = request.getRequestDispatcher("artworkList.do");
 		rd.forward(request, response);
 	}
 
@@ -39,24 +55,7 @@ public class memberJoinAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		request.setCharacterEncoding("utf-8");
-		
-		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		
-		MemberDTO member = new MemberDTO();
-		member.setUseraddr(request.getParameter("useraddr"));
-		member.setUseremail(request.getParameter("useremail"));
-		member.setUserid(request.getParameter("juserid"));
-		member.setUserpwd(request.getParameter("juserpwd"));
-		member.setUsertel(request.getParameter("usertel"));
-		member.setUserzipcode(request.getParameter("userzipcode"));
-		member.setUsername(request.getParameter("username"));
-		
-		dao.memberInsert(member);
-		
-		response.sendRedirect("login.do");
-
+		doGet(request, response);
 	}
 
 }

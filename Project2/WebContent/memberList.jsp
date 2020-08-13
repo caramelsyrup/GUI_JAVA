@@ -4,14 +4,24 @@
 <div id="welcome">
 	<h2>회원 명단</h2>
 </div>
+<div id="content">
 <table>
   <tr>
-    <th>Column 1 Heading</th>
-    <th>Column 2 Heading</th>
+    <th>번호</th>
+    <th>아이디</th>
+    <th>이름</th>
+    <th>연락처</th>
+    <th>이메일</th>
   </tr>
+<c:forEach items="${memberlist}" var="m">	  
   <tr>
-    <td>Row 1: Col 1</td>
-    <td>Row 1: Col 2</td>
+    <td>${m.num}</td>
+    <td><a href="memberDetail.do?userid=${m.userid}">${m.userid}</a></td>
+    <td>${m.username}</td>
+    <td>${m.usertel}</td>
+    <td>${m.useremail}</td>
   </tr>
+</c:forEach>  
 </table>
+</div>
 <%@ include file="../include/footer.jsp"%>

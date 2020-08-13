@@ -6,8 +6,9 @@
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="content"/>
+		<item key="selection" value="table"/>
 		<list key="findhistory">
+			<item value="table"/>
 			<item value="content"/>
 			<item value="nav"/>
 			<item value="color"/>

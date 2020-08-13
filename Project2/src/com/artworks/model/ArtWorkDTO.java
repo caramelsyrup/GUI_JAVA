@@ -2,7 +2,7 @@ package com.artworks.model;
 
 public class ArtWorkDTO {
 	private int artid;
-	private String arttitle,artmaker,artdescription;
+	private String arttitle,artmaker,artdescription,filename;
 	
 	public int getArtid() {
 		return artid;
@@ -10,20 +10,26 @@ public class ArtWorkDTO {
 	public void setArtid(int artid) {
 		this.artid = artid;
 	}
+	public String getFilename() {
+		return filename;
+	}
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 	public String getArttitle() {
-		return arttitle == null ? "" : arttitle.trim();
+		return arttitle;
 	}
 	public void setArttitle(String arttitle) {
 		this.arttitle = arttitle;
 	}
 	public String getArtmaker() {
-		return artmaker == null ? "" : artmaker.trim();
+		return artmaker;
 	}
 	public void setArtmaker(String artmaker) {
 		this.artmaker = artmaker;
 	}
 	public String getArtdescription() {
-		return artdescription == null ? "" : artdescription.trim();
+		return artdescription;
 	}
 	public void setArtdescription(String artdescription) {
 		this.artdescription = artdescription;
