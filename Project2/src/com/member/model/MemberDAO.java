@@ -7,8 +7,10 @@ public interface MemberDAO {
 	public void memberInsert(MemberDTO vo);
 	// 회원 정보 수정
 	public int memberUpdate(MemberDTO vo);
-	// 회원 정보 상세보기
+	// 회원 정보 상세보기 - 일반회원
 	public MemberDTO memberDetail(String userID);
+	// 회원 정보 상세보기 - 관리자 
+	public MemberDTO memberDetail(int usernum);
 	//삭제
 	public void memberDelete(String userID);
 	//아이디 중복 체크

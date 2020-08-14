@@ -149,13 +149,14 @@ $(document).ready(function(){
 		$("#joinform").submit();
 	});
 	
-	// 관리자-회원 상세 정보-정보수정
+	// 관리자-회원 상세 정보 페이지 수정버튼
 	$("#updatememberBtn").click(function(){
 		if(confirm('정말로 수정 하시겠습니까?')){
 			$("#memberUpdateform").submit();
 		}
 	});
 	
+	// 관리자-회원 상세 정보 페이지 삭제버튼
 	$("#deletememberBtn").click(function(){
 		if(confirm('정말로 삭제 하시겠습니까?')){
 			$.ajax({
@@ -163,7 +164,8 @@ $(document).ready(function(){
 				url:"memberdelete.do",
 				data:{"userid":$("#upuserid").val()},
 				success:function(val){
-					
+					alert('삭제되었습니다.');
+					location.href="memberlist.do";
 				},
 				error:function(e){
 					alert(e);
@@ -172,5 +174,9 @@ $(document).ready(function(){
 		}
 	});
 	
+	// 관리자-회원 목록 가기 버튼
+	$("#listmemberBtn").click(function(){
+		location.href="memberlist.do";
+	});
 	
 });

@@ -49,18 +49,21 @@ public class ArtWorkDAOImpl implements ArtWorkDAO {
 	}
 	
 	@Override	// 작품전체보기
-	public ArrayList<ArtWorkDTO> artworkList() {
+	public ArrayList<ArtWorkDTO> artworkList(int startRow, int endRow) {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
 		ArrayList<ArtWorkDTO> array = new ArrayList<ArtWorkDTO>();
-		
+		StringBuilder sb = new StringBuilder();
 		try {
 			con = getconnection();
-			String sql = "SELECT * FROM artworks ORDER BY artid DESC";
+			sb.append("SELECT * FROM ");
+			sb.append("(SELECT aa.* , rownum rn FROM ");
+			sb.append("(SELECT * FROM artworks ORDER BY artid DESC) aa ");
+			sb.append("WHERE rownum<="+endRow+") WHERE rn>="+startRow);
 			st = con.createStatement();
-			rs = st.executeQuery(sql);
-			
+			rs = st.executeQuery(sb.toString());
+		
 			while(rs.next()) {
 				ArtWorkDTO art = new ArtWorkDTO();
 				art.setArtdescription(rs.getString("artdescription"));
@@ -149,6 +152,11 @@ public class ArtWorkDAOImpl implements ArtWorkDAO {
 		} finally {
 			closeconnection(con, st, rs);
 		}
+	}
+	@Override
+	public int artworkCount() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

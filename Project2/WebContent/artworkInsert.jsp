@@ -17,7 +17,9 @@
 		<input type="text" size="20" name="afilename" id="afilename" required="required"><br>
 		<input class="allbutton" type="button" value="작품추가" id="artworkInsertBtn">
 		<input class="allbutton" type="reset" value="취소" id="reset">
+		<input class="allbutton" type="button" value="작품목록" id="artworkListBtn">
 	</form>
+	
 	</div>
 </div>
 

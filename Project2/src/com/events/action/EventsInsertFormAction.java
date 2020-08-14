@@ -1,4 +1,4 @@
-package com.member.action;
+package com.events.action;
 
 import java.io.IOException;
 
@@ -8,20 +8,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.member.model.MemberDAOImpl;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class memberDeleteAction
+ * Servlet implementation class EventsInsertFormAction
  */
-@WebServlet("/memberdelete.do")
-public class memberDeleteAction extends HttpServlet {
+@WebServlet("/eventsInsertForm.do")
+public class EventsInsertFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public memberDeleteAction() {
+    public EventsInsertFormAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +30,8 @@ public class memberDeleteAction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String userid = request.getParameter("userid");
 		
-		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		dao.memberDelete(userid);
-		
-		RequestDispatcher rd = request.getRequestDispatcher("memberlist.do");
+		RequestDispatcher rd = request.getRequestDispatcher("eventsinsert.jsp");
 		rd.forward(request, response);
 	}
 

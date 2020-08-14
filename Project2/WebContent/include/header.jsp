@@ -13,6 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="<c:url value="/js/member.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/artwork.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/events.js"/>"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -29,9 +30,10 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="logout.do">로그 아웃</a></li>
-						<li><a href="detail.do">나의 정보</a></li>
-						<c:if test="${sessionScope.userid=='admin'}">
+						<li><a href="memberDetail.do">나의 정보</a></li>
+						<c:if test="${sessionScope.grade==1}">
 							<li><a href="memberlist.do">회원 명단</a></li>
+							<li><a href="eventslist.do">행사 목록</a></li>
 							<li><a href="artworkInsertForm.do">작품 추가</a></li>
 						</c:if>	
 						<li>${sessionScope.userid}님 반갑습니다.</li>
@@ -44,9 +46,9 @@
 	<div id="menu">
 		<ul>
 			<li class="current_page_item"><a href="main.do">홈</a></li>
-			<li><a href="artworkList.do">전시관</a></li>
-			<li><a href="#">행사</a></li>
 			<li><a href="#">소개</a></li>
+			<li><a href="artworkList.do">전시관</a></li>
+			<li><a href="eventslist.do">행사</a></li>
 			<li class="last"><a href="#">기념품샵</a></li>
 		</ul>
 	</div>

@@ -50,6 +50,7 @@ public class memberLoginAction extends HttpServlet {
 		if(sign==1||sign==0) {
 			HttpSession session = request.getSession();
 			session.setAttribute("userid", userID);
+			session.setAttribute("grade", sign);
 		}
 		
 		response.setContentType("text/html;charset=utf-8");

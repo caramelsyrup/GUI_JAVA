@@ -368,11 +368,13 @@ table{
 	padding-left: 0px;
 }
 
-#two-columns #col1 #updatememberBtn {
+#two-columns #col1 #listmemberBtn {
 	margin-top: 30px;
-	margin-left: 200px;
+	margin-left: 140px;
 }
+#two-columns #col1 #updatememberBtn{
 
+}
 #two-columns #col1 ul li label {
 	margin-left: 20px;
 	font-size:1.2em;
@@ -400,6 +402,16 @@ table{
 	margin: 0px auto;
 	padding: 0px 0px 10px 10px;
 }
+#one-column #content{
+	margin: 0px auto;
+	text-align: center;
+}
+#one-column #content h3{
+
+}
+#one-column #content a{
+
+	}
 #one-column #area{
 	text-align: center;
 }

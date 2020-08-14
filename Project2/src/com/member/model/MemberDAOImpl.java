@@ -99,7 +99,7 @@ public class MemberDAOImpl implements MemberDAO {
 		return 0;
 	}
 
-	@Override	// 회원정보 상세조회
+	@Override	// 회원정보 상세조회 - 일반유저
 	public MemberDTO memberDetail(String userID) {
 		Connection con = null;
 		Statement st = null;
@@ -265,6 +265,35 @@ public class MemberDAOImpl implements MemberDAO {
 			closeconnection(con, st, rs);
 		}
 		return arr;
+	}
+	@Override	// 회원정보 조회 - 관리자
+	public MemberDTO memberDetail(int usernum) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		MemberDTO member = new MemberDTO();;
+		try {
+			con = getconnection();
+			String sql = "SELECT * FROM member WHERE num ="+usernum;
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				member.setAdmin(rs.getInt("admin"));
+				member.setNum(rs.getInt("num"));
+				member.setUseraddr(rs.getString("useraddr"));
+				member.setUseremail(rs.getString("useremail"));
+				member.setUserid(rs.getString("userid"));
+				member.setUsername(rs.getString("username"));
+				member.setUserpwd(rs.getString("userpwd"));
+				member.setUsertel(rs.getString("usertel"));
+				member.setUserzipcode(rs.getString("userzipcode"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeconnection(con, st, rs);
+		}
+		return member;
 	}
 	
 }

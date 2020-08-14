@@ -46,6 +46,9 @@
 						<input type="text" value="${memberDetail.useraddr}" name="upuseraddr" size=50>
 					</li>
 				</ul>
+				<c:if test="${sessionScope.grade==1}">
+					<input type="button" class="allbutton" value="회원목록" id="listmemberBtn">
+				</c:if>
 				<input type="button" class="allbutton" value="수정하기" id="updatememberBtn">
 				<input type="button" class="allbutton" value="회원탈퇴" id="deletememberBtn">
 				</form>

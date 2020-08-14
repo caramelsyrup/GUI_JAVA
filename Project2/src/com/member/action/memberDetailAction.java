@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberDAOImpl;
 import com.member.model.MemberDTO;
@@ -32,12 +33,24 @@ public class memberDetailAction extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		String userid = request.getParameter("userid");
-		
 		MemberDAOImpl dao = MemberDAOImpl.getInstance();
-		MemberDTO dto = dao.memberDetail(userid);
+		HttpSession session = request.getSession();
 		
-		request.setAttribute("memberDetail", dto);
+		int grade = (int) session.getAttribute("grade");
+		// 0은 일반회원, 1은 관리자
+		if(grade == 0){
+			String userid = (String)session.getAttribute("userid");;
+			MemberDTO dto = dao.memberDetail(userid);
+			request.setAttribute("memberDetail", dto);
+		}else if(grade == 1){
+			String userid = (String)session.getAttribute("userid");;
+			MemberDTO dto = dao.memberDetail(userid);
+			request.setAttribute("memberDetail", dto);
+		}else {
+			int usernum =Integer.parseInt(request.getParameter("usernum"));
+			MemberDTO dto = dao.memberDetail(usernum);
+			request.setAttribute("memberDetail", dto);
+		}
 		
 		RequestDispatcher rd = request.getRequestDispatcher("memberdetail.jsp");
 		rd.forward(request, response);
