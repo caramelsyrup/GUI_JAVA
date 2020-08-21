@@ -3,7 +3,6 @@ package org.addrMy.action;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,16 +16,16 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 /**
- * Servlet implementation class ListAction
+ * Servlet implementation class UpdateAction
  */
-@WebServlet("/address/listAction.amy")
-public class ListAction extends HttpServlet {
+@WebServlet("/address/updateAction.amy")
+public class UpdateAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListAction() {
+    public UpdateAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,24 +36,27 @@ public class ListAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
+		AddressVO avo = new AddressVO();
+		avo.setAddress(request.getParameter("address"));
+		avo.setName(request.getParameter("name"));
+		avo.setNum(Integer.parseInt(request.getParameter("num")));
+		avo.setTel(request.getParameter("tel"));
+		avo.setZipcode(request.getParameter("zipcode"));
+		
+		// Mybatis에서 권장하는 형태의 개발, 세션은 반드시 닫아주기를 권장함.
 		SqlSessionFactory sqlMapper = MybatisManager.getSqlMapper();
 		SqlSession sqlsession = sqlMapper.openSession(ExecutorType.REUSE);
 		
 		try {
-			List<AddressVO> arr = sqlsession.selectList("listData");
-			request.setAttribute("arr", arr);
-			
-//			int count = (int)sqlsession.selectOne("countData");
-			int count = sqlsession.selectOne("countsearchData");
-			request.setAttribute("count", count);
-			
+			sqlsession.update("updateData",avo);
+			sqlsession.commit();
 		} finally {
 			sqlsession.clearCache();
 			sqlsession.close();
 		}
 		
-		RequestDispatcher dispatacher = request.getRequestDispatcher("addrList.jsp");
-		dispatacher.forward(request, response);
+		response.sendRedirect("listAction.amy");
+		
 	}
 
 	/**

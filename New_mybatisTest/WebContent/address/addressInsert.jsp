@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <title>주소록예제</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
+<script type="text/javascript">
+	function zipfinder(){
+		window.open("zipAction.amy","","width=700 height=400");
+	}
+</script>
 </head>
 <body>
 <h1>주소록 등록하기</h1>
@@ -24,7 +28,7 @@
 			<th align="left">우편번호</th>
 			<td>
 				<input type="text" name="zipcode" id="zipCode" size="10">
-				<input type="button" value="검색"	 id="zipBtn">
+				<input type="button" value="검색"	 id="zipBtn" onclick="zipfinder()">
 			</td>
 		</tr>
 		<tr>

@@ -50,11 +50,14 @@ public class InsertAction extends HttpServlet {
 		SqlSessionFactory sqlMapper= MybatisManager.getSqlMapper();
 		// 저장된 sqlMapper에서 
 		SqlSession sqlSession = sqlMapper.openSession(ExecutorType.REUSE);
-		sqlSession.insert("insertData",avo);
-		sqlSession.commit();
-		
+		try {
+			sqlSession.insert("insertData",avo);
+			sqlSession.commit();
+		} finally {
+			sqlSession.clearCache();
+			sqlSession.close();
+		}
 		response.sendRedirect("listAction.amy");
-		
 	}
 
 }
